@@ -1,0 +1,41 @@
+[
+  {
+    "id": 1,
+    "nombre": "Guitarra eléctrica Ibanez Steve Vai PIA3761C",
+    "marca": "IBANEZ",
+    "precio": "$3.285.990",
+    "imagen": "/imagenes/guitarraIbanez01.webp",
+    "descuento": null
+  },
+  {
+    "id": 2,
+    "nombre": "Guitarra eléctrica Ibanez Joe Satriani JS2480",
+    "marca": "IBANEZ",
+    "precio": "$2.719.990",
+    "imagen": "img/ibanez2.jpg",
+    "descuento": null
+  },
+  {
+    "id": 3,
+    "nombre": "Guitarra electroacústica Admira Malaga",
+    "marca": "ADMIRA",
+    "precio": "$556.990",
+    "imagen": "img/admira.jpg",
+    "descuento": null
+  },
+  {
+    "id": 4,
+    "nombre": "Guitarra electroacústica Takamine GC6CE",
+    "marca": "TAKAMINE",
+    "precio": "$459.990",
+    "imagen": "img/takamine.jpg",
+    "descuento": "-16%"
+  },
+  {
+    "id": 5,
+    "nombre": "Guitarra eléctrica Ibanez Joe Satriani JS2480",
+    "marca": "IBANEZ",
+    "precio": "$2.719.990",
+    "imagen": "img/ibanez2.jpg",
+    "descuento": null
+  }]
