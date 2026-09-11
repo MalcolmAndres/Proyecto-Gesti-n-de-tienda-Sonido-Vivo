@@ -1,89 +1,82 @@
+const carritoVacio = document.getElementById("carrito-vacio");
+const contenedorCarrito = document.getElementById("contenedor-carrito");
+
 let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
 console.log("Carrito recuperado:", carrito);
 
-const contenedorCarrito = document.getElementById("contenedor-carrito");
-
 function mostrarCarrito() {
+
 
     if (carrito.length === 0) {
 
-        contenedorCarrito.innerHTML = `
-            <div class="card shadow-sm border-0">
-                <div class="card-body text-center py-5">
+        // style.display = permite controlar como se muestra un elemento HTML
+        // block = muestra el elemento como un bloque
+        // none = oculta el elemento
 
-                    <i class="bi bi-cart fs-1 text-secondary"></i>
 
-                    <h4 class="mt-3">
-                        Tu carrito está vacío
-                    </h4>
+        carritoVacio.style.display = "block"; // muestra el mensaje de carrito vacío
 
-                    <p class="text-secondary">
-                        Agrega productos desde nuestro catálogo.
-                    </p>
-
-                    <a href="../productos/catalogo.html" class="btn btn-warning fw-bold">
-                        Ver catálogo
-                    </a>
-
-                </div>
-            </div>
-        `;
+        contenedorCarrito.style.display = "none"; // oculta el contenedor donde irían los productos
 
     } else {
 
-    contenedorCarrito.innerHTML = "";
+        carritoVacio.style.display = "none"; // oculta mensaje de tu carrito está vacío
 
-    carrito.forEach(producto => {
+        contenedorCarrito.style.display = "block"; // muestra los productos
 
-        contenedorCarrito.innerHTML += `
-            <div class="card shadow-sm border-0 mb-3">
+        contenedorCarrito.innerHTML = "";
 
-                <div class="card-body">
+        carrito.forEach(producto => {
 
-                    <h5 class="fw-bold">
-                        ${producto.nombre}
-                    </h5>
+            contenedorCarrito.innerHTML += `
+                <div class="card shadow-sm border-0 mb-3">
 
-                    <p class="text-secondary mb-1">
-                        Marca: ${producto.marca}
-                    </p>
+                    <div class="card-body">
 
-                    <p class="mb-1">
-                        Precio: ${producto.precio}
-                    </p>
+                        <h5 class="fw-bold">
+                            ${producto.nombre}
+                        </h5>
 
-                    <div class="d-flex align-items-center gap-2 mt-3">
+                        <p class="text-secondary mb-1">
+                            Marca: ${producto.marca}
+                        </p>
 
-                        <span>Cantidad:</span>
+                        <p class="mb-1">
+                            Precio: ${producto.precio}
+                        </p>
 
-                        <button onclick="disminuirCantidad(${producto.id})" class="btn btn-outline-secondary btn-sm">
-                            -
-                        </button>
+                        <div class="d-flex align-items-center gap-2 mt-3">
 
-                        <span class="fw-bold">
-                            ${producto.cantidad}
-                        </span>
+                            <span>Cantidad:</span>
 
-                        <button onclick="aumentarCantidad(${producto.id})" class="btn btn-outline-secondary btn-sm">
-                            +
+                            <button onclick="disminuirCantidad(${producto.id})" class="btn btn-outline-secondary btn-sm">
+                                -
+                            </button>
+
+                            <span class="fw-bold">
+                                ${producto.cantidad}
+                            </span>
+
+                            <button onclick="aumentarCantidad(${producto.id})" class="btn btn-outline-secondary btn-sm">
+                                +
+                            </button>
+
+                        </div>
+
+                        <button onclick="eliminarProducto(${producto.id})" class="btn btn-danger btn-sm mt-3">
+                            Eliminar
                         </button>
 
                     </div>
 
-                    <button onclick="eliminarProducto(${producto.id})" class="btn btn-danger btn-sm mt-3">
-                        Eliminar
-                    </button>
-
                 </div>
+            `;
 
-            </div>
-        `;
+        });
 
-    });
-
-}
-    
+    }
+            
 }
 
 function aumentarCantidad(id) {
