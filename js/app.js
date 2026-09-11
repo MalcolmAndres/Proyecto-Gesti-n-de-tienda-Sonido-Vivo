@@ -1,9 +1,10 @@
 const contenedor = document.getElementById("contenedor-tarjetas");
+let instrumentos = []; // instrumentos disponibles para todo el archivo app.js
 
 async function cargarInstrumentos() {
     try {
         const respuesta = await fetch("instrumentos.json");
-        const instrumentos = await respuesta.json();
+        instrumentos = await respuesta.json();
 
         contenedor.innerHTML = "";
 
@@ -26,7 +27,15 @@ async function cargarInstrumentos() {
                             <div>
                                 <p class="fw-bold fs-5 text-dark mb-3">${item.precio}</p>
                                 <!-- Al hacer clic, lo mandamos a detalle.html enviando su ID -->
-                                <button onclick="verDetalle(${item.id})" class="btn btn-dark w-100 btn-sm">Ver instrumento</button>
+                                
+                                <button onclick="verDetalle(${item.id})" class="btn btn-dark w-100 btn-sm mb-2">
+                                    Ver instrumento
+                                </button>
+
+                                <button onclick="agregarAlCarrito(${item.id})" class="btn btn-warning w-100 btn-sm fw-bold">
+                                    Agregar al carrito
+                                </button>
+
                             </div>
                         </div>
                     </div>
@@ -38,6 +47,55 @@ async function cargarInstrumentos() {
         console.error("Hubo un error al cargar el JSON:", error);
         contenedor.innerHTML = `<p class="text-danger">No se pudieron cargar los instrumentos.</p>`;
     }
+
+}
+
+function actualizarContadorCarrito() {
+
+    const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
+    let cantidadTotal = 0;
+
+    carrito.forEach(producto => {
+        cantidadTotal += producto.cantidad;
+    });
+
+    const contadorCarrito = document.getElementById("contador-carrito");
+
+    contadorCarrito.textContent = `Carrito (${cantidadTotal})`;
+}
+
+function agregarAlCarrito(id) {
+
+    // busca por el primer elemento de instrumenos que el id sea igual al id que recibimos desde el catálogo
+    const producto = instrumentos.find(item => item.id === id); 
+
+    // localStorage = Espacio en el navegador para guardar datos de una página web de forma local
+    // arregloJs = lista[]
+
+    // Primero intenta recuperar lo guardado con el nombre "carrito", pero localStorage guarda todo como texto, por eso se usa JSON.parse,
+    // para transformar el texto nuevamente en un arreglo de JavaScript.
+
+    let carrito = JSON.parse(localStorage.getItem("carrito")) || []; // || [] = si todavía no existe ningún carrito, crea un arreglo
+
+    const productoExistente = carrito.find(item => item.id === id); //Busca el producto en el carrito
+
+    if (productoExistente) {
+
+        productoExistente.cantidad++; // ++ sirve para ir aumentando de 1 en 1
+
+    } else {
+
+        producto.cantidad = 1;
+        carrito.push(producto); //si no, se agrega 1 como cantidad del producto
+
+    }
+
+    localStorage.setItem("carrito", JSON.stringify(carrito)); //guarda el carrito / JSON.stringify = convertimos el arreglo nuevamente a texto para poder guardarlo
+
+    console.log("Carrito:", carrito);
+
+    actualizarContadorCarrito();
 }
 
 function verDetalle(id) {
@@ -45,3 +103,4 @@ function verDetalle(id) {
 }
 
 cargarInstrumentos();
+actualizarContadorCarrito();
