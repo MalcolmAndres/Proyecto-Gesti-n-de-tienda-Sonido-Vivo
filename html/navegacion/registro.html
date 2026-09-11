@@ -1,0 +1,113 @@
+<!-- html/navegacion/registro.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - Sonido Vivo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/styles.css">
+</head>
+<body class="bg-light d-flex flex-column min-vh-100">
+
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow-sm">
+            <div class="container">
+                <a class="navbar-brand fw-bold text-warning d-flex align-items-center gap-2" href="../../index.html">
+                    <img src="../../imagenes/nosotros/logo.png" alt="Logo Sonido Vivo" style="height: 40px; width: auto;" class="object-fit-contain">
+                    <span>Sonido Vivo</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                    <ul class="navbar-nav align-items-center gap-2">
+                        <li class="nav-item"><a class="nav-link" href="../../index.html">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="productos.html">Catálogo</a></li>
+                        <li class="nav-item"><a class="nav-link" href="nosotros.html">Nosotros</a></li>
+                        <li class="nav-item"><a class="nav-link" href="blogs.html">Blogs</a></li>
+                        <li class="nav-item"><a class="nav-link" href="contacto.html">Contacto</a></li>
+                        <li class="nav-item"><a class="nav-link" href="login.html">Iniciar Sesión</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="registro.html">Registrarse</a></li>
+                        <li class="nav-item ms-lg-2">
+                            <a href="carrito.html" class="btn btn-warning fw-bold text-dark">Carrito (0)</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="flex-grow-1 d-flex align-items-center justify-content-center my-5">
+        <div class="card p-4 shadow-sm border-0 bg-white w-100" style="max-width: 550px;">
+            <h1 class="h3 mb-3 fw-bold text-center">Formulario Registro - Cliente</h1>
+            <form class="needs-validation" novalidate>
+                <div class="mb-3">
+                    <label for="run" class="form-label">RUN</label>
+                    <input type="text" class="form-control" id="run" placeholder="Ej: 12345678-9" required>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="nombre" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="apellido" class="form-label">Apellido</label>
+                        <input type="text" class="form-control" id="apellido" required>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="correo" class="form-label">Correo electrónico</label>
+                    <input type="email" class="form-control" id="correo" required>
+                </div>
+                <div class="mb-3">
+                    <label for="fechaNacimiento" class="form-label">Fecha nacimiento</label>
+                    <input type="date" class="form-control" id="fechaNacimiento" required>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="selectRegion" class="form-label">Región</label>
+                        <select class="form-select" id="selectRegion" required>
+                            <option value="" selected disabled>Seleccione Región</option>
+                            <option value="valparaiso">Región de Valparaíso</option>
+                            <option value="metropolitana">Región Metropolitana</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="selectComuna" class="form-label">Comuna</label>
+                        <select class="form-select" id="selectComuna" required>
+                            <option value="" selected disabled>Seleccione Comuna</option>
+                            <option value="vina">Viña del Mar</option>
+                            <option value="valparaiso">Valparaíso</option>
+                            <option value="quilpue">Quilpué</option>
+                            <option value="villa_alemana">Villa Alemana</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="direccion" class="form-label">Dirección</label>
+                    <input type="text" class="form-control" id="direccion" required>
+                </div>
+                <div class="mb-3">
+                    <label for="contrasena" class="form-label">Contraseña</label>
+                    <input type="password" class="form-control" id="contrasena" required>
+                </div>
+                <div class="mb-3">
+                    <label for="repetirContrasena" class="form-label">Repetir Contraseña</label>
+                    <input type="password" class="form-control" id="repetirContrasena" required>
+                </div>
+                <button type="submit" class="btn btn-warning w-100 text-dark fw-bold mb-3">Registrarse</button>
+                <p class="text-center small text-muted mb-0">¿Ya tienes cuenta? <a href="login.html" class="text-warning fw-bold text-decoration-none">Inicia sesión</a></p>
+            </form>
+        </div>
+    </main>
+
+    <footer class="bg-dark text-white text-center py-4 mt-auto">
+        <div class="container">
+            <p class="small text-secondary mb-0">&copy; 2026 Sonido Vivo. Todos los derechos reservados. | Viña del Mar, Chile</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
