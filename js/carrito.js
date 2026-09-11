@@ -50,7 +50,7 @@ function mostrarCarrito() {
 
                             <span>Cantidad:</span>
 
-                            <button onclick="disminuirCantidad(${producto.id})" class="btn btn-outline-secondary btn-sm">
+                            <button onclick="disminuirCantidad('${producto.id}')" class="btn btn-outline-secondary btn-sm">
                                 -
                             </button>
 
@@ -58,13 +58,13 @@ function mostrarCarrito() {
                                 ${producto.cantidad}
                             </span>
 
-                            <button onclick="aumentarCantidad(${producto.id})" class="btn btn-outline-secondary btn-sm">
+                            <button onclick="aumentarCantidad('${producto.id}')" class="btn btn-outline-secondary btn-sm">
                                 +
                             </button>
 
                         </div>
 
-                        <button onclick="eliminarProducto(${producto.id})" class="btn btn-danger btn-sm mt-3">
+                        <button onclick="eliminarProducto('${producto.id}')" class="btn btn-danger btn-sm mt-3">
                             Eliminar
                         </button>
 
