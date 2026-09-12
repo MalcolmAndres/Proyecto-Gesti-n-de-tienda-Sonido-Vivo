@@ -59,99 +59,109 @@
         </div>
     </div>
 
-    <!-- 4. CONTENEDOR PRINCIPAL: FILTROS + CATÁLOGO -->
-    <div class="container-fluid px-4 mb-5">
-        
-        <!-- Barra de búsqueda interna y ordenamiento -->
-        <div class="row mb-4 align-items-center bg-white p-3 rounded shadow-sm">
-            <div class="col-md-3">
-                <span class="text-secondary fw-semibold" style="font-size: 0.9rem;">EXPLORA EL CATÁLOGO</span>
-                <h5 class="fw-bold mb-0">Instrumentos</h5>
-            </div>
-            <div class="col-md-6 my-2 my-md-0">
-                <div class="input-group">
-                    <span class="input-group-text bg-white border-end-0"><i class="bi bi-search text-muted"></i></span>
-                    <input type="text" class="form-control border-start-0 ps-0" placeholder="Buscar dentro del catálogo">
-                    <button class="btn btn-danger" type="button">Buscar</button>
-                </div>
-            </div>
-            <div class="col-md-3 d-flex justify-content-md-end align-items-center gap-3">
-                <select class="form-select form-select-sm w-auto">
-                    <option selected>Más recientes</option>
-                    <option value="1">Menor precio</option>
-                    <option value="2">Mayor precio</option>
-                </select>
-                <div class="btn-group" role="group">
-                    <button type="button" class="btn btn-outline-secondary btn-sm active"><i class="bi bi-grid-fill"></i></button>
-                    <button type="button" class="btn btn-outline-secondary btn-sm"><i class="bi bi-list"></i></button>
-                </div>
-            </div>
+   <!-- Barra de búsqueda interna y ordenamiento -->
+<div class="row mb-4 align-items-center bg-white p-3 rounded shadow-sm">
+    <div class="col-md-3">
+        <span class="text-secondary fw-semibold" style="font-size: 0.9rem;">EXPLORA EL CATÁLOGO</span>
+        <h5 class="fw-bold mb-0">Instrumentos</h5>
+    </div>
+    <div class="col-md-6 my-2 my-md-0">
+        <div class="input-group">
+            <span class="input-group-text bg-white border-end-0"><i class="bi bi-search text-muted"></i></span>
+            <input type="text" class="form-control border-start-0 ps-0" id="inputBuscador" placeholder="Buscar dentro del catálogo">
+            <button class="btn btn-danger" type="button" id="btnBuscar">Buscar</button>
         </div>
-
-        <div class="row">
+    </div>
+</div>
             
-            <!-- COLUMNA IZQUIERDA: LA BARRA LATERAL DE FILTROS -->
-            <div class="col-lg-3 col-md-4 mb-4">
-                <div class="card border-0 shadow-sm p-4 bg-white">
-                    
-                    <!-- PRECIO -->
-                    <h6 class="fw-bold text-secondary mb-3" style="font-size: 0.85rem; letter-spacing: 0.5px;">PRECIO</h6>
-                    <div class="mb-3">
-                        <label for="precioDesde" class="form-label text-secondary mb-1" style="font-size: 0.9rem;">Desde</label>
-                        <input type="text" class="form-control form-control-sm text-dark fw-medium" id="precioDesde" placeholder="$20.500">
-                    </div>
-                    <div class="mb-3">
-                        <label for="precioHasta" class="form-label text-secondary mb-1" style="font-size: 0.9rem;">Hasta</label>
-                        <input type="text" class="form-control form-control-sm text-dark fw-medium" id="precioHasta" placeholder="$1.168.750">
-                    </div>
-                    <div class="form-check mb-4">
-                        <input class="form-check-input" type="checkbox" value="" id="soloOfertas">
-                        <label class="form-check-label text-dark d-flex justify-content-between align-items-center w-100" for="soloOfertas">
-                            <span>Solo ofertas</span>
-                            <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-2" style="font-size: 0.75rem;">4</span>
-                        </label>
-                    </div>
+           <!-- PRECIO -->
+<h6 class="fw-bold text-secondary mb-3" style="font-size: 0.85rem; letter-spacing: 0.5px;">PRECIO</h6>
+<div class="mb-3">
+    <label for="precioDesde" class="form-label text-secondary mb-1" style="font-size: 0.9rem;">Desde</label>
+    <input type="number" class="form-control form-control-sm text-dark fw-medium" id="precioDesde" placeholder="20500">
+</div>
+<div class="mb-3">
+    <label for="precioHasta" class="form-label text-secondary mb-1" style="font-size: 0.9rem;">Hasta</label>
+    <input type="number" class="form-control form-control-sm text-dark fw-medium" id="precioHasta" placeholder="1168750">
+</div>
 
-                    <!-- DISPONIBILIDAD -->
-                    <h6 class="fw-bold text-secondary mb-3 pt-2 border-top" style="font-size: 0.85rem; letter-spacing: 0.5px;">DISPONIBILIDAD</h6>
-                    <div class="d-flex flex-column gap-2 mb-4">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="disp1">
-                            <label class="form-check-label text-dark d-flex justify-content-between align-items-center" for="disp1">
-                                <span>A pedido</span>
-                                <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-2" style="font-size: 0.75rem;">113</span>
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="disp2">
-                            <label class="form-check-label text-dark d-flex justify-content-between align-items-center" for="disp2">
-                                <span>Agotado</span>
-                                <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-2" style="font-size: 0.75rem;">24</span>
-                            </label>
-                        </div>
-                    </div>
 
-                    <!-- CATEGORÍA -->
-                    <h6 class="fw-bold text-secondary mb-3 pt-2 border-top" style="font-size: 0.85rem; letter-spacing: 0.5px;">CATEGORÍA</h6>
-                    <div class="d-flex flex-column gap-2">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="cat1">
-                            <label class="form-check-label text-dark d-flex justify-content-between align-items-center" for="cat1">
-                                <span>Guitarras Eléctricas</span>
-                                <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-2" style="font-size: 0.75rem;">127</span>
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="cat2">
-                            <label class="form-check-label text-dark d-flex justify-content-between align-items-center" for="cat2">
-                                <span>Guitarras Acústicas</span>
-                                <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-2" style="font-size: 0.75rem;">4</span>
-                            </label>
-                        </div>
-                    </div>
 
-                </div>
-            </div>
+
+                   <!-- CATEGORÍA -->
+<h6 class="fw-bold text-secondary mb-3 pt-2 border-top" style="font-size: 0.85rem; letter-spacing: 0.5px;">CATEGORÍA</h6>
+<div class="d-flex flex-column gap-2">
+    <div class="form-check">
+        <input class="form-check-input filtro-categoria" type="checkbox" value="Guitarras Eléctricas" id="cat1">
+        <label class="form-check-label text-dark d-flex justify-content-between align-items-center" for="cat1">
+            <span>Guitarras Eléctricas</span>
+            <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-2" style="font-size: 0.75rem;">127</span>
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input filtro-categoria" type="checkbox" value="Guitarras Acústicas" id="cat2">
+        <label class="form-check-label text-dark d-flex justify-content-between align-items-center" for="cat2">
+            <span>Guitarras Acústicas</span>
+            <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-2" style="font-size: 0.75rem;">4</span>
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input filtro-categoria" type="checkbox" value="Bajos eléctricos" id="cat3">
+        <label class="form-check-label text-dark d-flex justify-content-between align-items-center" for="cat3">
+            <span>Bajos eléctricos</span>
+            <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-2" style="font-size: 0.75rem;">8</span>
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input filtro-categoria" type="checkbox" value="Teclados y pianos" id="cat4">
+        <label class="form-check-label text-dark d-flex justify-content-between align-items-center" for="cat4">
+            <span>Teclados y pianos</span>
+            <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-2" style="font-size: 0.75rem;">15</span>
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input filtro-categoria" type="checkbox" value="Baterías" id="cat5">
+        <label class="form-check-label text-dark d-flex justify-content-between align-items-center" for="cat5">
+            <span>Baterías</span>
+            <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-2" style="font-size: 0.75rem;">4</span>
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input filtro-categoria" type="checkbox" value="Amplificadores" id="cat6">
+        <label class="form-check-label text-dark d-flex justify-content-between align-items-center" for="cat6">
+            <span>Amplificadores</span>
+            <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-2" style="font-size: 0.75rem;">4</span>
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input filtro-categoria" type="checkbox" value="Micrófonos" id="cat7">
+        <label class="form-check-label text-dark d-flex justify-content-between align-items-center" for="cat7">
+            <span>Micrófonos</span>
+            <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-2" style="font-size: 0.75rem;">4</span>
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input filtro-categoria" type="checkbox" value="Pedales de efectos" id="cat8">
+        <label class="form-check-label text-dark d-flex justify-content-between align-items-center" for="cat8">
+            <span>Pedales de efectos</span>
+            <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-2" style="font-size: 0.75rem;">4</span>
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input filtro-categoria" type="checkbox" value="Accesorios" id="cat9">
+        <label class="form-check-label text-dark d-flex justify-content-between align-items-center" for="cat9">
+            <span>Accesorios</span>
+            <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-2" style="font-size: 0.75rem;">4</span>
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input filtro-categoria" type="checkbox" value="Estudio y grabación" id="cat10">
+        <label class="form-check-label text-dark d-flex justify-content-between align-items-center" for="cat10">
+            <span>Estudio y grabación</span>
+            <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-2" style="font-size: 0.75rem;">4</span>
+        </label>
+    </div>
+</div>
 
             <!-- COLUMNA DERECHA: LOS PRODUCTOS DINÁMICOS JSON -->
             <div class="col-lg-9 col-md-8">
