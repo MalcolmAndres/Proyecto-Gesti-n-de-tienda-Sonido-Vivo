@@ -1,4 +1,3 @@
-<!-- html/navegacion/registro.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -45,24 +44,29 @@
                 <div class="mb-3">
                     <label for="run" class="form-label">RUN</label>
                     <input type="text" class="form-control" id="run" placeholder="Ej: 12345678-9" required>
+                    <div class="invalid-feedback">Por favor ingresa tu RUN.</div>
                 </div>
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="nombre" class="form-label">Nombre</label>
                         <input type="text" class="form-control" id="nombre" required>
+                        <div class="invalid-feedback">Ingresa tu nombre.</div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="apellido" class="form-label">Apellido</label>
                         <input type="text" class="form-control" id="apellido" required>
+                        <div class="invalid-feedback">Ingresa tu apellido.</div>
                     </div>
                 </div>
                 <div class="mb-3">
                     <label for="correo" class="form-label">Correo electrónico</label>
-                    <input type="email" class="form-control" id="correo" required>
+                    <input type="email" class="form-control" id="correo" placeholder="ejemplo@gmail.com" required>
+                    <div class="invalid-feedback">Ingresa un correo @gmail.com o @hotmail.com válido.</div>
                 </div>
                 <div class="mb-3">
                     <label for="fechaNacimiento" class="form-label">Fecha nacimiento</label>
                     <input type="date" class="form-control" id="fechaNacimiento" required>
+                    <div class="invalid-feedback">Selecciona tu fecha de nacimiento.</div>
                 </div>
                 <div class="row">
                     <div class="col-md-6 mb-3">
@@ -70,25 +74,30 @@
                         <select class="form-select" id="selectRegion" required>
                             <option value="" selected disabled>Seleccione Región</option>
                         </select>
+                        <div class="invalid-feedback">Selecciona una región.</div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="selectComuna" class="form-label">Comuna</label>
                         <select class="form-select" id="selectComuna" required disabled>
                             <option value="" selected disabled>Seleccione Comuna</option>
                         </select>
+                        <div class="invalid-feedback">Selecciona una comuna.</div>
                     </div>
                 </div>
                 <div class="mb-3">
                     <label for="direccion" class="form-label">Dirección</label>
                     <input type="text" class="form-control" id="direccion" required>
+                    <div class="invalid-feedback">Ingresa tu dirección.</div>
                 </div>
                 <div class="mb-3">
                     <label for="contrasena" class="form-label">Contraseña</label>
                     <input type="password" class="form-control" id="contrasena" required>
+                    <div class="invalid-feedback">Ingresa una contraseña.</div>
                 </div>
                 <div class="mb-3">
                     <label for="repetirContrasena" class="form-label">Repetir Contraseña</label>
                     <input type="password" class="form-control" id="repetirContrasena" required>
+                    <div class="invalid-feedback">Confirma tu contraseña.</div>
                 </div>
                 <button type="submit" class="btn btn-warning w-100 text-dark fw-bold mb-3">Registrarse</button>
                 <p class="text-center small text-muted mb-0">¿Ya tienes cuenta? <a href="login.html" class="text-warning fw-bold text-decoration-none">Inicia sesión</a></p>
@@ -103,8 +112,7 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Vinculación de tu script de regiones y comunas -->
     <script src="../../js/regiones-comunas.js"></script>
+    <script src="../../js/registro.js"></script>
 </body>
 </html>
