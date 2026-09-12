@@ -39,13 +39,7 @@ function mostrarCarrito() {
 
                     <div class="card-body">
 
-                        <!-- NUEVO:
-                        usamos row para ordenar mejor el contenido del producto -->
-
                         <div class="row align-items-center">
-
-                            <!-- NUEVO:
-                            columna principal con la información del producto -->
 
                             <div class="col-12 col-md-8">
 
@@ -57,14 +51,9 @@ function mostrarCarrito() {
                                     Marca: ${producto.marca}
                                 </p>
 
-
-                                <!-- NUEVO:
-                                toLocaleString("es-CL") agrega los puntos de miles -->
-
                                 <p class="mb-2">
                                     Precio: $${producto.precio.toLocaleString("es-CL")}
                                 </p>
-
 
                                 <div class="d-flex align-items-center gap-2 mt-3">
 
@@ -78,9 +67,6 @@ function mostrarCarrito() {
                                         -
                                     </button>
 
-                                    <!-- NUEVO:
-                                    px-2 agrega espacio horizontal alrededor de la cantidad -->
-
                                     <span class="fw-bold px-2">
                                         ${producto.cantidad}
                                     </span>
@@ -93,16 +79,9 @@ function mostrarCarrito() {
 
                                 </div>
 
-
-                                <!-- NUEVO:
-                                botón eliminar con borde rojo en vez de fondo completamente rojo -->
-
                                 <button
                                     onclick="eliminarProducto('${producto.id}')"
                                     class="btn btn-outline-danger btn-sm mt-3">
-
-                                    <!-- NUEVO:
-                                    icono de papelera de Bootstrap Icons -->
 
                                     <i class="bi bi-trash"></i>
 
@@ -112,10 +91,6 @@ function mostrarCarrito() {
 
                             </div>
 
-
-                            <!-- NUEVO:
-                            segunda columna para destacar el subtotal -->
-
                             <div class="col-12 col-md-4 text-md-end mt-3 mt-md-0">
 
                                 <p class="text-secondary mb-1">
@@ -123,9 +98,6 @@ function mostrarCarrito() {
                                 </p>
 
                                 <h4 class="fw-bold mb-0">
-
-                                    <!-- NUEVO:
-                                    subtotal con formato chileno -->
 
                                     $${subtotal.toLocaleString("es-CL")}
 
@@ -143,28 +115,20 @@ function mostrarCarrito() {
         });
 
 
-        // NUEVO:
-        // tarjeta que muestra el resumen de la compra
-
         contenedorCarrito.innerHTML += `
             <div class="card shadow-sm border-0 mt-4">
 
                 <div class="card-body">
 
-                    <!-- NUEVO -->
                     <h4 class="fw-bold mb-3">
                         Resumen de compra
                     </h4>
 
-
-                    <!-- NUEVO:
-                    línea divisoria -->
+                    <!-- línea divisoria -->
 
                     <hr>
 
-
-                    <!-- NUEVO:
-                    separa el texto Total y el precio -->
+                    <!-- separa el texto Total y el precio -->
 
                     <div class="d-flex justify-content-between align-items-center">
 
@@ -174,9 +138,6 @@ function mostrarCarrito() {
 
                         <span class="fs-4 fw-bold">
 
-                            <!-- NUEVO:
-                            total con formato chileno -->
-
                             $${totalCompra.toLocaleString("es-CL")}
 
                         </span>
@@ -184,13 +145,11 @@ function mostrarCarrito() {
                     </div>
 
 
-                    <!-- NUEVO:
-                    w-100 hace que el botón ocupe todo el ancho -->
+                    <!-- w-100 hace que el botón ocupe todo el ancho -->
 
                     <button class="btn btn-success fw-bold w-100 mt-4">
 
-                        <!-- NUEVO:
-                        icono Bootstrap -->
+                        <!-- icono Bootstrap -->
 
                         <i class="bi bi-bag-check"></i>
 
@@ -198,13 +157,8 @@ function mostrarCarrito() {
 
                     </button>
 
-
-                    <!-- NUEVO:
-                    botón para volver al catálogo -->
-
                     <a
-                        href="../productos/catalogo.html"
-                        class="btn btn-outline-secondary w-100 mt-2">
+                        href="../productos/catalogo.html" class="btn btn-outline-secondary w-100 mt-2">
 
                         Seguir comprando
 
