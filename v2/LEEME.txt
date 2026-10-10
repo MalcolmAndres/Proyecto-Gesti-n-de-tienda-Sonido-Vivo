@@ -1,0 +1,27 @@
+ESTRUCTURA DEL FRONTEND - SONIDO VIVO
+
+1. Crear el proyecto:  npm create vite@latest sonido-vivo-front -- --template react
+2. Reemplazar la carpeta src/ que crea Vite por esta src/
+3. Todos los archivos están vacíos: el código lo escriben ustedes.
+
+Qué va en cada carpeta:
+  api/         configuración de axios y lista de URLs del backend
+  services/    funciones que piden datos (una por microservicio). Eligen mock o backend real
+  mocks/       datos falsos (data/*.json) y funciones que los simulan
+  context/     estado global: sesión del usuario y carrito
+  hooks/       hooks propios (useAuth, useCart, useFetch)
+  routes/      definición de rutas y protección por rol
+  layouts/     estructura común de las páginas (con o sin menú)
+  components/  piezas reutilizables (Navbar, tarjeta de producto, mapa...)
+  pages/       una pantalla por archivo, separadas por rol
+  utils/       constantes (roles, estados) y funciones de formato
+
+Regla: las páginas nunca llaman a axios directamente, siempre pasan por services/.
+
+Quién hace qué:
+  Persona 1: auth/, admin/Usuarios, AuthContext, ProtectedRoute, Navbar, layouts,
+             authService, usuariosService
+  Persona 2: Catalogo, DetalleProducto, GestionStock, Reportes, ProductCard,
+             productosService, reportesService, productos.json
+  Persona 3: Carrito, Checkout, MisPedidos, Ubicacion, GestionPedidos, CartContext,
+             Mapa, EstadoBadge, pedidosService, pedidos.json, puntosRetiro.json
