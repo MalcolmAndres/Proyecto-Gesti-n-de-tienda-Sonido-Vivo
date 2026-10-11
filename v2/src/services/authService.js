@@ -5,7 +5,7 @@ import {USE_MOCKS} from "./config";
 
 export const login = (credenciales) => 
     USE_MOCKS
-?mckApi.login(credenciales)
+?mockApi.login(credenciales)
 :http.psot(ENDPOINTS.AUTH_LOGIN,credenciales).then((r)=> r.data);
 
 export const registro = (datos) =>
