@@ -1,7 +1,7 @@
 import hhtp from "../api/httpClient";
 import {ENDPOINTS} from "../api/endpoints";
 import {mockApi} from "../mocks/mockApi";
-import {USE_MOCKS} from "../config";
+import {USE_MOCKS} from "./config";
 
 export const login = (credenciales) => 
     USE_MOCKS
