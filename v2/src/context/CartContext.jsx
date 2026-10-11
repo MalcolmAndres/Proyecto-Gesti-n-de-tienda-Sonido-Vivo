@@ -12,22 +12,6 @@ export function CartProvider({ children }) { // children representa los componen
     // estado que almacena productos del carrito
     const [carrito, setCarrito] = useState([]);
 
-    return (
-        <CartContext.Provider
-            value={{
-                carrito,
-                agregarProducto,
-                eliminarProducto,
-                aumentarCantidad,
-                disminuirCantidad,
-                vaciarCarrito
-            }}
-        >
-            {children}
-        </CartContext.Provider>
-    );
-
-}
 
 const agregarProducto = (producto) => {
 
@@ -39,12 +23,21 @@ const agregarProducto = (producto) => {
         );
 
         if (productoExistente) {
+
+            if (productoExistente.cantidad >= producto.stock) {
+                return carritoActual;
+            }
+
             return carritoActual.map((item) =>
                 item.id === producto.id
                     ? { ...item, cantidad: item.cantidad + 1 } // ? = si coincide la id, agrega el item y aumenta la cantidad +1
                     : item  // : = si no coincide la id, se mantiene el item sin aumentar la cantidad
             );
 
+        }
+
+        if (producto.stock <= 0) {
+            return carritoActual;
         }
 
         return [...carritoActual, { ...producto, cantidad: 1 }];
@@ -74,7 +67,10 @@ const aumentarCantidad = (producto) => {
 
         );
 
-        if (productoExistente && productoExistente.cantidad >= 1) {
+        if (productoExistente && 
+            productoExistente.cantidad >= 1 &&
+            productoExistente.cantidad < producto.stock
+        ) {
             return carritoActual.map((item) =>
                 item.id === producto.id
                     ? { ...item, cantidad: item.cantidad + 1 }
@@ -107,7 +103,7 @@ const disminuirCantidad = (producto) => {
 
         }
 
-        if (productoExistente && productoExistente === 1) {
+        if (productoExistente && productoExistente.cantidad === 1) {
             return carritoActual.filter(
                 (item) => item.id !== producto.id
             );
@@ -122,6 +118,28 @@ const disminuirCantidad = (producto) => {
 
 const vaciarCarrito = () => {
 
-   setCarrito = ([]);
+   setCarrito([]);
 
 };
+
+const totalCarrito = carrito.reduce((total, producto) => {
+    return total + (producto.precio * producto.cantidad);
+}, 0);
+
+return (
+        <CartContext.Provider
+            value={{
+                carrito,
+                agregarProducto,
+                eliminarProducto,
+                aumentarCantidad,
+                disminuirCantidad,
+                vaciarCarrito,
+                totalCarrito
+            }}
+        >
+            {children}
+        </CartContext.Provider>
+    );
+
+}
