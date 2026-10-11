@@ -42,6 +42,31 @@ const nuevo = {id: siguienteId(db.usuarios),nombre,email,passwrod,rol:
 };
    
 },
+//CRUD MOCK DE USUARIOS
+async getUsuarios() {
+  await delay();
+  return db.usuarios.map(sinPassword);
+},
+async crearUsuario(datos){
+    await delay();
+    if(db.usuarios.some((u) => u.email === datos.email)){
+        throw new Error("El correo ya está registrado");
+    }
+    const nuevo = {id: siguienteId(db.usuarios),activo};
+    db.usuarios.push(nuevo);
+    guardar("usuarios", db.usuarios);
+    return sinPassword(nuevo);
+},
+async actualizarUsuario(id, cambios){
+    await delay();
+    const usuario = db.usuarios.find((u) => u.id === id);
+    if(!usuario){ throw new Error("Usuario no encontrado");}
+    Object.assign(usuario,cambios);
+    guardar("usuarios", db.usuarios);
+    return sinPassword(usuario);
+
+
+},
 }
  
 
