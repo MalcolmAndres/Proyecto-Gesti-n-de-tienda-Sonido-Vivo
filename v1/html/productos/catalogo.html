@@ -1,178 +1,634 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Catálogo - Sonido Vivo</title>
+
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
     <link rel="stylesheet" href="../css/style.css">
+
 </head>
+
+
 <body class="bg-light">
 
+
     <!-- NAVBAR OSCURO ESTILO SONIDO VIVO -->
+
     <nav class="navbar navbar-expand-lg navbar-dark px-4 py-3" style="background-color: #181b1f;">
+
         <div class="container-fluid">
+
             <!-- Logo / Brand -->
+
             <a class="navbar-brand fw-bold text-warning d-flex align-items-center gap-2 fs-4" href="#">
                 <span>🎧</span> Sonido Vivo
             </a>
-            
+
+
             <!-- Botón responsive para móviles -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+
+            <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarNav"
+                aria-controls="navbarNav"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+
                 <span class="navbar-toggler-icon"></span>
+
             </button>
-            
-            <!-- Enlaces de navegación alineados a la derecha -->
+
+
+            <!-- Enlaces de navegación -->
+
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+
                 <ul class="navbar-nav align-items-center gap-lg-3">
-                        <li class="nav-item"><a class="nav-link" href="../../index.html">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../productos/catalogo.html">Catálogo</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../navegacion/nosotros.html">Nosotros</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../navegacion/blogs.html">Blogs</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../navegacion/contacto.html">Contacto</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../navegacion/login.html">Iniciar Sesión</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../navegacion/registro.html">Registrarse</a></li>
-                    <li class="nav-item ms-lg-2">
-                        <a id="contador-carrito" class="btn btn-warning fw-bold px-3 text-dark text-decoration-none" href="../navegacion/carrito.html">
-                            Carrito (0)
-                        </a>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../index.html">Home</a>
                     </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="../productos/catalogo.html">Catálogo</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="../navegacion/nosotros.html">Nosotros</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="../navegacion/blogs.html">Blogs</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="../navegacion/contacto.html">Contacto</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="../navegacion/login.html">Iniciar Sesión</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="../navegacion/registro.html">Registrarse</a>
+                    </li>
+
+                    <li class="nav-item ms-lg-2">
+
+                        <a
+                            id="contador-carrito"
+                            class="btn btn-warning fw-bold px-3 text-dark text-decoration-none"
+                            href="../navegacion/carrito.html">
+
+                            Carrito (0)
+
+                        </a>
+
+                    </li>
+
                 </ul>
+
             </div>
+
         </div>
+
     </nav>
 
-    <!-- 3. BANNER SUPERIOR DE SECCIÓN -->
-    <div class="py-4 px-4 text-dark mb-4" style="background: linear-gradient(135deg, cyan 0%, gray 100%); border-bottom: 4px solid #dc2626;">
+
+
+    <!-- BANNER SUPERIOR -->
+
+    <div
+        class="py-4 px-4 text-dark mb-4"
+        style="background: linear-gradient(135deg, cyan 0%, gray 100%);
+               border-bottom: 4px solid #dc2626;">
+
         <div class="container">
+
             <nav style="--bs-breadcrumb-divider: '/';" aria-label="breadcrumb">
+
                 <ol class="breadcrumb mb-1 text-muted" style="font-size: 0.85rem;">
-                    <li class="breadcrumb-item"><a href="#" class="text-decoration-none text-secondary">Inicio</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Catálogo</li>
+
+                    <li class="breadcrumb-item">
+
+                        <a href="#" class="text-decoration-none text-secondary">
+                            Inicio
+                        </a>
+
+                    </li>
+
+                    <li class="breadcrumb-item active" aria-current="page">
+                        Catálogo
+                    </li>
+
                 </ol>
+
             </nav>
-            <h1 class="fw-bold display-5 mb-1">Catálogo de Instrumentos</h1>
-            <p class="text-secondary mb-0">Guitarras y otros instrumentos musicales</p>
+
+
+            <h1 class="fw-bold display-5 mb-1">
+                Catálogo de Instrumentos
+            </h1>
+
+            <p class="text-secondary mb-0">
+                Guitarras y otros instrumentos musicales
+            </p>
+
         </div>
-    </div>
 
-   <!-- Barra de búsqueda interna y ordenamiento -->
-<div class="row mb-4 align-items-center bg-white p-3 rounded shadow-sm">
-    <div class="col-md-3">
-        <span class="text-secondary fw-semibold" style="font-size: 0.9rem;">EXPLORA EL CATÁLOGO</span>
-        <h5 class="fw-bold mb-0">Instrumentos</h5>
     </div>
-    <div class="col-md-6 my-2 my-md-0">
-        <div class="input-group">
-            <span class="input-group-text bg-white border-end-0"><i class="bi bi-search text-muted"></i></span>
-            <input type="text" class="form-control border-start-0 ps-0" id="inputBuscador" placeholder="Buscar dentro del catálogo">
-            <button class="btn btn-danger" type="button" id="btnBuscar">Buscar</button>
-        </div>
-    </div>
-</div>
-            
-           <!-- PRECIO -->
-<h6 class="fw-bold text-secondary mb-3" style="font-size: 0.85rem; letter-spacing: 0.5px;">PRECIO</h6>
-<div class="mb-3">
-    <label for="precioDesde" class="form-label text-secondary mb-1" style="font-size: 0.9rem;">Desde</label>
-    <input type="number" class="form-control form-control-sm text-dark fw-medium" id="precioDesde" placeholder="20500">
-</div>
-<div class="mb-3">
-    <label for="precioHasta" class="form-label text-secondary mb-1" style="font-size: 0.9rem;">Hasta</label>
-    <input type="number" class="form-control form-control-sm text-dark fw-medium" id="precioHasta" placeholder="1168750">
-</div>
 
 
 
+    <!-- RESTAURADO:
+         CONTENEDOR PRINCIPAL QUE ENVUELVE TODO EL CATÁLOGO -->
 
-                   <!-- CATEGORÍA -->
-<h6 class="fw-bold text-secondary mb-3 pt-2 border-top" style="font-size: 0.85rem; letter-spacing: 0.5px;">CATEGORÍA</h6>
-<div class="d-flex flex-column gap-2">
-    <div class="form-check">
-        <input class="form-check-input filtro-categoria" type="checkbox" value="Guitarras Eléctricas" id="cat1">
-        <label class="form-check-label text-dark d-flex justify-content-between align-items-center" for="cat1">
-            <span>Guitarras Eléctricas</span>
-            <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-2" style="font-size: 0.75rem;">127</span>
-        </label>
-    </div>
-    <div class="form-check">
-        <input class="form-check-input filtro-categoria" type="checkbox" value="Guitarras Acústicas" id="cat2">
-        <label class="form-check-label text-dark d-flex justify-content-between align-items-center" for="cat2">
-            <span>Guitarras Acústicas</span>
-            <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-2" style="font-size: 0.75rem;">4</span>
-        </label>
-    </div>
-    <div class="form-check">
-        <input class="form-check-input filtro-categoria" type="checkbox" value="Bajos eléctricos" id="cat3">
-        <label class="form-check-label text-dark d-flex justify-content-between align-items-center" for="cat3">
-            <span>Bajos eléctricos</span>
-            <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-2" style="font-size: 0.75rem;">8</span>
-        </label>
-    </div>
-    <div class="form-check">
-        <input class="form-check-input filtro-categoria" type="checkbox" value="Teclados y pianos" id="cat4">
-        <label class="form-check-label text-dark d-flex justify-content-between align-items-center" for="cat4">
-            <span>Teclados y pianos</span>
-            <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-2" style="font-size: 0.75rem;">15</span>
-        </label>
-    </div>
-    <div class="form-check">
-        <input class="form-check-input filtro-categoria" type="checkbox" value="Baterías" id="cat5">
-        <label class="form-check-label text-dark d-flex justify-content-between align-items-center" for="cat5">
-            <span>Baterías</span>
-            <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-2" style="font-size: 0.75rem;">4</span>
-        </label>
-    </div>
-    <div class="form-check">
-        <input class="form-check-input filtro-categoria" type="checkbox" value="Amplificadores" id="cat6">
-        <label class="form-check-label text-dark d-flex justify-content-between align-items-center" for="cat6">
-            <span>Amplificadores</span>
-            <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-2" style="font-size: 0.75rem;">4</span>
-        </label>
-    </div>
-    <div class="form-check">
-        <input class="form-check-input filtro-categoria" type="checkbox" value="Micrófonos" id="cat7">
-        <label class="form-check-label text-dark d-flex justify-content-between align-items-center" for="cat7">
-            <span>Micrófonos</span>
-            <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-2" style="font-size: 0.75rem;">4</span>
-        </label>
-    </div>
-    <div class="form-check">
-        <input class="form-check-input filtro-categoria" type="checkbox" value="Pedales de efectos" id="cat8">
-        <label class="form-check-label text-dark d-flex justify-content-between align-items-center" for="cat8">
-            <span>Pedales de efectos</span>
-            <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-2" style="font-size: 0.75rem;">4</span>
-        </label>
-    </div>
-    <div class="form-check">
-        <input class="form-check-input filtro-categoria" type="checkbox" value="Accesorios" id="cat9">
-        <label class="form-check-label text-dark d-flex justify-content-between align-items-center" for="cat9">
-            <span>Accesorios</span>
-            <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-2" style="font-size: 0.75rem;">4</span>
-        </label>
-    </div>
-    <div class="form-check">
-        <input class="form-check-input filtro-categoria" type="checkbox" value="Estudio y grabación" id="cat10">
-        <label class="form-check-label text-dark d-flex justify-content-between align-items-center" for="cat10">
-            <span>Estudio y grabación</span>
-            <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-2" style="font-size: 0.75rem;">4</span>
-        </label>
-    </div>
-</div>
+    <div class="container-fluid px-4 mb-5">
 
-            <!-- COLUMNA DERECHA: LOS PRODUCTOS DINÁMICOS JSON -->
-            <div class="col-lg-9 col-md-8">
-                <div class="row" id="contenedor-tarjetas">
+
+        <!-- BARRA DE BÚSQUEDA -->
+
+        <div class="row mb-4 align-items-center bg-white p-3 rounded shadow-sm">
+
+            <div class="col-md-3">
+
+                <span
+                    class="text-secondary fw-semibold"
+                    style="font-size: 0.9rem;">
+
+                    EXPLORA EL CATÁLOGO
+
+                </span>
+
+                <h5 class="fw-bold mb-0">
+                    Instrumentos
+                </h5>
+
+            </div>
+
+
+            <div class="col-md-6 my-2 my-md-0">
+
+                <div class="input-group">
+
+                    <span class="input-group-text bg-white border-end-0">
+
+                        <i class="bi bi-search text-muted"></i>
+
+                    </span>
+
+                    <!-- SE CONSERVA LO NUEVO:
+                         id usado por JavaScript -->
+
+                    <input
+                        type="text"
+                        class="form-control border-start-0 ps-0"
+                        id="inputBuscador"
+                        placeholder="Buscar dentro del catálogo">
+
+
+                    <!-- SE CONSERVA LO NUEVO:
+                         id usado por JavaScript -->
+
+                    <button
+                        class="btn btn-danger"
+                        type="button"
+                        id="btnBuscar">
+
+                        Buscar
+
+                    </button>
+
                 </div>
+
             </div>
 
         </div>
+
+
+
+        <!-- RESTAURADO:
+             ROW QUE CONTIENE FILTROS + PRODUCTOS -->
+
+        <div class="row">
+
+
+            <!-- RESTAURADO:
+                 COLUMNA IZQUIERDA DE FILTROS -->
+
+            <div class="col-lg-3 col-md-4 mb-4">
+
+
+                <!-- RESTAURADO:
+                     TARJETA VISUAL DE LOS FILTROS -->
+
+                <div class="card border-0 shadow-sm p-4 bg-white">
+
+
+                    <!-- PRECIO -->
+
+                    <h6
+                        class="fw-bold text-secondary mb-3"
+                        style="font-size: 0.85rem; letter-spacing: 0.5px;">
+
+                        PRECIO
+
+                    </h6>
+
+
+                    <div class="mb-3">
+
+                        <label
+                            for="precioDesde"
+                            class="form-label text-secondary mb-1"
+                            style="font-size: 0.9rem;">
+
+                            Desde
+
+                        </label>
+
+                        <!-- SE CONSERVA LO NUEVO:
+                             input numérico -->
+
+                        <input
+                            type="number"
+                            class="form-control form-control-sm text-dark fw-medium"
+                            id="precioDesde"
+                            placeholder="20500">
+
+                    </div>
+
+
+                    <div class="mb-3">
+
+                        <label
+                            for="precioHasta"
+                            class="form-label text-secondary mb-1"
+                            style="font-size: 0.9rem;">
+
+                            Hasta
+
+                        </label>
+
+                        <!-- SE CONSERVA LO NUEVO -->
+
+                        <input
+                            type="number"
+                            class="form-control form-control-sm text-dark fw-medium"
+                            id="precioHasta"
+                            placeholder="1168750">
+
+                    </div>
+
+
+
+                    <!-- CATEGORÍAS -->
+
+                    <h6
+                        class="fw-bold text-secondary mb-3 pt-2 border-top"
+                        style="font-size: 0.85rem; letter-spacing: 0.5px;">
+
+                        CATEGORÍA
+
+                    </h6>
+
+
+                    <div class="d-flex flex-column gap-2">
+
+
+                        <div class="form-check">
+
+                            <input
+                                class="form-check-input filtro-categoria"
+                                type="checkbox"
+                                value="Guitarras Eléctricas"
+                                id="cat1">
+
+                            <label
+                                class="form-check-label text-dark d-flex justify-content-between align-items-center"
+                                for="cat1">
+
+                                <span>
+                                    Guitarras Eléctricas
+                                </span>
+
+                                <span
+                                    class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-2"
+                                    style="font-size: 0.75rem;">
+
+                                    127
+
+                                </span>
+
+                            </label>
+
+                        </div>
+
+
+                        <div class="form-check">
+
+                            <input
+                                class="form-check-input filtro-categoria"
+                                type="checkbox"
+                                value="Guitarras Acústicas"
+                                id="cat2">
+
+                            <label
+                                class="form-check-label text-dark d-flex justify-content-between align-items-center"
+                                for="cat2">
+
+                                <span>
+                                    Guitarras Acústicas
+                                </span>
+
+                                <span
+                                    class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-2"
+                                    style="font-size: 0.75rem;">
+
+                                    4
+
+                                </span>
+
+                            </label>
+
+                        </div>
+
+
+                        <div class="form-check">
+
+                            <input
+                                class="form-check-input filtro-categoria"
+                                type="checkbox"
+                                value="Bajos eléctricos"
+                                id="cat3">
+
+                            <label
+                                class="form-check-label text-dark d-flex justify-content-between align-items-center"
+                                for="cat3">
+
+                                <span>
+                                    Bajos eléctricos
+                                </span>
+
+                                <span
+                                    class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-2"
+                                    style="font-size: 0.75rem;">
+
+                                    8
+
+                                </span>
+
+                            </label>
+
+                        </div>
+
+
+                        <div class="form-check">
+
+                            <input
+                                class="form-check-input filtro-categoria"
+                                type="checkbox"
+                                value="Teclados y pianos"
+                                id="cat4">
+
+                            <label
+                                class="form-check-label text-dark d-flex justify-content-between align-items-center"
+                                for="cat4">
+
+                                <span>
+                                    Teclados y pianos
+                                </span>
+
+                                <span
+                                    class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-2"
+                                    style="font-size: 0.75rem;">
+
+                                    15
+
+                                </span>
+
+                            </label>
+
+                        </div>
+
+
+                        <div class="form-check">
+
+                            <input
+                                class="form-check-input filtro-categoria"
+                                type="checkbox"
+                                value="Baterías"
+                                id="cat5">
+
+                            <label
+                                class="form-check-label text-dark d-flex justify-content-between align-items-center"
+                                for="cat5">
+
+                                <span>
+                                    Baterías
+                                </span>
+
+                                <span
+                                    class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-2"
+                                    style="font-size: 0.75rem;">
+
+                                    4
+
+                                </span>
+
+                            </label>
+
+                        </div>
+
+
+                        <div class="form-check">
+
+                            <input
+                                class="form-check-input filtro-categoria"
+                                type="checkbox"
+                                value="Amplificadores"
+                                id="cat6">
+
+                            <label
+                                class="form-check-label text-dark d-flex justify-content-between align-items-center"
+                                for="cat6">
+
+                                <span>
+                                    Amplificadores
+                                </span>
+
+                                <span
+                                    class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-2"
+                                    style="font-size: 0.75rem;">
+
+                                    4
+
+                                </span>
+
+                            </label>
+
+                        </div>
+
+
+                        <div class="form-check">
+
+                            <input
+                                class="form-check-input filtro-categoria"
+                                type="checkbox"
+                                value="Micrófonos"
+                                id="cat7">
+
+                            <label
+                                class="form-check-label text-dark d-flex justify-content-between align-items-center"
+                                for="cat7">
+
+                                <span>
+                                    Micrófonos
+                                </span>
+
+                                <span
+                                    class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-2"
+                                    style="font-size: 0.75rem;">
+
+                                    4
+
+                                </span>
+
+                            </label>
+
+                        </div>
+
+
+                        <div class="form-check">
+
+                            <input
+                                class="form-check-input filtro-categoria"
+                                type="checkbox"
+                                value="Pedales de efectos"
+                                id="cat8">
+
+                            <label
+                                class="form-check-label text-dark d-flex justify-content-between align-items-center"
+                                for="cat8">
+
+                                <span>
+                                    Pedales de efectos
+                                </span>
+
+                                <span
+                                    class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-2"
+                                    style="font-size: 0.75rem;">
+
+                                    4
+
+                                </span>
+
+                            </label>
+
+                        </div>
+
+
+                        <div class="form-check">
+
+                            <input
+                                class="form-check-input filtro-categoria"
+                                type="checkbox"
+                                value="Accesorios"
+                                id="cat9">
+
+                            <label
+                                class="form-check-label text-dark d-flex justify-content-between align-items-center"
+                                for="cat9">
+
+                                <span>
+                                    Accesorios
+                                </span>
+
+                                <span
+                                    class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-2"
+                                    style="font-size: 0.75rem;">
+
+                                    4
+
+                                </span>
+
+                            </label>
+
+                        </div>
+
+
+                        <div class="form-check">
+
+                            <input
+                                class="form-check-input filtro-categoria"
+                                type="checkbox"
+                                value="Estudio y grabación"
+                                id="cat10">
+
+                            <label
+                                class="form-check-label text-dark d-flex justify-content-between align-items-center"
+                                for="cat10">
+
+                                <span>
+                                    Estudio y grabación
+                                </span>
+
+                                <span
+                                    class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-2"
+                                    style="font-size: 0.75rem;">
+
+                                    4
+
+                                </span>
+
+                            </label>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- COLUMNA DERECHA:
+                 PRODUCTOS DINÁMICOS DEL JSON -->
+
+            <div class="col-lg-9 col-md-8">
+
+                <div class="row" id="contenedor-tarjetas">
+
+                </div>
+
+            </div>
+
+
+        </div>
+
     </div>
 
+
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
     <script src="../../js/app.js"></script>
+
+
 </body>
+
 </html>

@@ -1,23 +1,19 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const loginForm = document.querySelector("form");
-
-    if (loginForm) {
-        loginForm.addEventListener("submit", function(event) {
-            event.preventDefault();
-
-            const emailInput = document.getElementById("email");
-            if (!emailInput) return;
-
-            const email = emailInput.value.trim().toLowerCase();
-
-            // Rutas correctas basadas en tu explorador de archivos
-            if (email.includes("admin")) {
-                window.location.href = "../administracion/dashboard-admin.html";
-            } else if (email.includes("empleado")) {
-                window.location.href = "../administracion/dashboard-empleado.html";
-            } else {
-                window.location.href = "../../index.html";
-            }
-        });
+    const usuarioLogueado = JSON.parse(localStorage.getItem("usuarioLogueado"));
+    
+    if (usuarioLogueado) {
+        const navLogin = document.querySelector('a[href*="login.html"]');
+        if (navLogin) {
+            navLogin.textContent = `Hola, ${usuarioLogueado.nombre || "Usuario"}`;
+            navLogin.href = "#";
+            navLogin.title = "Cerrar sesión";
+            navLogin.addEventListener("click", (e) => {
+                e.preventDefault();
+                if (confirm("¿Deseas cerrar sesión?")) {
+                    localStorage.removeItem("usuarioLogueado");
+                    window.location.href = "../../index.html";
+                }
+            });
+        }
     }
 });
