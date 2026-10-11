@@ -13,20 +13,31 @@ export default function Carrito() {
     vaciarCarrito
   } = useCart();
 
-  const productoPrueba = instrumentos[0];
+  const productosPrueba = instrumentos.slice(0, 3);
 
   return (
     <main className="container my-4">
 
       <h2>Mi carrito de compras</h2>
 
-      {/* Botón temporal para probar el carrito */}
-      <button
-        className="btn btn-warning mb-3"
-        onClick={() => agregarProducto(productoPrueba)}
-      >
-        Agregar {productoPrueba.nombre}
-      </button>
+      {/* Botones temporales para probar productos */}
+      <div className="d-flex flex-wrap gap-2 mb-3">
+
+        {productosPrueba.map((producto) => (
+
+          <button
+
+            key={producto.id}
+
+            className="btn btn-warning"
+            onClick={() => agregarProducto(producto)}
+          >
+            Agregar {producto.nombre}
+          </button>
+
+        ))}
+
+      </div>
 
       {carrito.length === 0 ? (
         <p>Tu carrito está vacío.</p>
@@ -41,6 +52,10 @@ export default function Carrito() {
                 <h3>{producto.nombre}</h3>
 
                 <p>Precio: ${producto.precio.toLocaleString("es-CL")}</p>
+
+                <p>Subtotal: ${(producto.precio * producto.cantidad).toLocaleString("es-CL")}</p>
+
+                <p className="text-muted"> Stock disponible: {producto.stock}</p>
 
                 {/*organiza elementos en una fila, centra verticalmente los botones, 16 px entre elementos*/}
                 <div className="d-flex align-items-center gap-3">
@@ -59,6 +74,7 @@ export default function Carrito() {
                   <button
                     className="btn btn-outline-secondary"
                     onClick={() => aumentarCantidad(producto)}
+                    disabled={producto.cantidad >= producto.stock}
                   >
                     +
                   </button>
