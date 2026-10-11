@@ -1,5 +1,6 @@
 import { useCart } from "../../hooks/useCart";
 import instrumentos from "../../../../v1/data/instrumentos.json";
+import { Link } from "react-router-dom";
 
 export default function Carrito() {
 
@@ -102,6 +103,13 @@ export default function Carrito() {
           )}
 
           <h4>Total: ${totalCarrito.toLocaleString("es-CL")}</h4>
+
+          {/*Continuar hacia la confirmación del pedido*/}
+          <Link to="/checkout" className="btn btn-warning mt-3 me-2">
+
+            Continuar compra
+
+          </Link>
 
           {/*Vaciar productos del carrito*/}
           <button
