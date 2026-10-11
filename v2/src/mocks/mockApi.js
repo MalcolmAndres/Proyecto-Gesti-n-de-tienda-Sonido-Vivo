@@ -14,6 +14,7 @@ const guardar = (clave, valor) =>
   localStorage.setItem(`mock_${clave}`, JSON.stringify(valor));
 const sinPassword = ({ password, ...resto }) => resto;
 
+const siguienteId = (lista) => Math.max(0, ...lista.map((x)=> x.id)) + 1;;
 const db = {
   usuarios: cargar("usuarios", usuariosIniciales),
 };
@@ -29,6 +30,18 @@ async login({ email, password }) {
   if (!usuario.activo) throw new Error("Tu cuenta está desactivada");
   return { token: `mock-token-${usuario.id}`, usuario: sinPassword(usuario) };
 },
+async registro({nombre,email,password}){
+await delay();
+if (db.usuarios.some((u) => u.email === email)) {
+  throw new Error("El correo ya está registrado");
 }
-    
+const nuevo = {id: siguienteId(db.usuarios),nombre,email,passwrod,rol:
+    "CLIENTE",activo:true};
+    db.usuarios.push(nuevo);
+    return {token: `mock-token-${nuevo.id}`, usuario: sinPassword(nuevo)
+};
+   
+},
+}
+ 
 
