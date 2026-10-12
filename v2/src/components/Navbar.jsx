@@ -2,11 +2,13 @@ import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { ROLES, NOMBRE_ROL } from "../utils/roles";
+import { useCart } from "../hooks/useCart";
 
 const { ADMIN, VENDEDOR, CLIENTE } = ROLES;
 
 const LINKS = [
   { to: "/catalogo", texto: "Catálogo", roles: [CLIENTE, VENDEDOR, ADMIN] },
+  { to: "/carrito", texto: "Carrito", roles: [CLIENTE] },
   { to: "/mis-pedidos", texto: "Mis pedidos", roles: [CLIENTE] },
   { to: "/ubicacion", texto: "Ubicación", roles: [CLIENTE, VENDEDOR, ADMIN] },
   { to: "/gestion/pedidos", texto: "Pedidos", roles: [VENDEDOR, ADMIN] },
@@ -20,6 +22,12 @@ export default function Navbar() {
   const navigate = useNavigate();
   const [abierto, setAbierto] = useState(false);
   const visibles = LINKS.filter((l) => l.roles.includes(usuario?.rol));
+  const { carrito } = useCart();
+
+  const cantidadCarrito = carrito.reduce(
+    (total, producto) => total + producto.cantidad,
+    0
+  );
 
   const salir = () => {
     setAbierto(false);
@@ -44,7 +52,11 @@ export default function Navbar() {
           <ul className="navbar-nav me-auto">
             {visibles.map((l) => (
               <li className="nav-item" key={l.to}>
-                <NavLink className="nav-link" to={l.to} onClick={() => setAbierto(false)}>{l.texto}</NavLink>
+                <NavLink className="nav-link" to={l.to} onClick={() => setAbierto(false)}
+                >
+                  {l.texto}
+                  {l.to === "/carrito" && ` (${cantidadCarrito})`}
+                </NavLink>
               </li>
             ))}
           </ul>

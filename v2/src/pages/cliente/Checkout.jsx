@@ -1,11 +1,16 @@
 import { useCart } from "../../hooks/useCart";
 import { useState } from "react";
+import puntosRetiro from "../../mocks/data/puntosRetiro.json";
+import Mapa from "../../components/Mapa";
 
 export default function Checkout() {
 
   // Obtenemos productos y total carrito.
   const { carrito, totalCarrito } = useCart();
   const [tipoEntrega, setTipoEntrega] = useState("retiro");
+  const [direccion, setDireccion] = useState("");
+  const [puntoRetiro, setPuntoRetiro] = useState("");
+
 
   return (
     <main className="container my-4">
@@ -32,7 +37,7 @@ export default function Checkout() {
                 <p>Subtotal: ${(producto.precio * producto.cantidad).toLocaleString("es-CL")}</p>
 
               </div>
-              
+
             </div>
           ))}
 
@@ -87,11 +92,69 @@ export default function Checkout() {
 
             </div>
 
+            {/*muestra la dirección cuando se selecciona un despacho*/}
+            {tipoEntrega === "domicilio" && (
+
+              <div className="mt-3">
+
+                <label htmlFor="direccion" className="form-label">
+
+                  Dirección de despacho
+
+                </label>
+
+                <input
+
+                  type="text"
+                  id="direccion"
+                  className="form-control"
+                  placeholder="Ingrese su dirección"
+                  value={direccion}
+                  onChange={(e) => setDireccion(e.target.value)} />
+
+              </div>
+            )}
+
+            {/*muestra los puntos disponibles para retiro*/}
+            {tipoEntrega === "retiro" && (
+
+              <div className="mt-3">
+
+                <label htmlFor="puntoRetiro" className="form-label">
+
+                  Punto de retiro
+
+                </label>
+
+                <select
+
+                  id="puntoRetiro"
+                  className="form-select"
+                  value={puntoRetiro}
+                  onChange={(e) => setPuntoRetiro(e.target.value)}
+                >
+                  <option value="">Seleccione un punto de retiro</option>
+
+                  {puntosRetiro.map((punto) => (
+                    <option key={punto.id} value={punto.id}>
+                      {punto.nombre}
+                    </option>
+                  ))}
+
+                </select>
+
+                <Mapa puntoSeleccionado={puntoRetiro} />
+
+              </div>
+
+            )}
+
           </section>
 
         </div>
       )}
 
     </main>
+
   );
 }
