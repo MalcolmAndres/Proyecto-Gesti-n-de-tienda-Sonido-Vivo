@@ -10,7 +10,29 @@ export default function Checkout() {
   const [tipoEntrega, setTipoEntrega] = useState("retiro");
   const [direccion, setDireccion] = useState("");
   const [puntoRetiro, setPuntoRetiro] = useState("");
+  const [mensaje, setMensaje] = useState(""); // Mensaje validación pedido
 
+
+  // Valida los datos de entrega antes de confirmar
+  const validarPedido = () => {
+
+    if (carrito.length === 0) {
+      setMensaje("El carrito está vacío.");
+      return;
+    }
+
+    if (tipoEntrega === "retiro" && !puntoRetiro) {
+      setMensaje("Debe seleccionar un punto de retiro.");
+      return;
+    }
+
+    if (tipoEntrega === "domicilio" && !direccion.trim()) {
+      setMensaje("Debe ingresar una dirección de despacho.");
+      return;
+    }
+
+    setMensaje("Los datos del pedido son correctos.");
+  };
 
   return (
     <main className="container my-4">
@@ -151,10 +173,34 @@ export default function Checkout() {
 
           </section>
 
+          {/*mensaje validación*/}
+          {mensaje && (
+
+            <div className="alert alert-info mt-4" role="alert">
+
+              {mensaje}
+
+            </div>
+
+          )}
+
+          {/*validar pedido*/}
+
+          <button
+
+            type="button"
+            className="btn btn-warning mt-3"
+            onClick={validarPedido}
+          >
+            Confirmar pedido
+
+          </button>
+
         </div>
       )}
 
     </main>
 
   );
+  
 }
