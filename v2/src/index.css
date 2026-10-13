@@ -30,3 +30,6 @@ h1 { font-size: 1.75rem; font-weight: 700; margin-bottom: 1rem; }
 /* Botón principal del equipo: <button className="btn btn-primario"> */
 .btn-primario { background: var(--sv-primario); color: var(--sv-oscuro); border: none; font-weight: 600; }
 .btn-primario:hover { background: var(--sv-primario-hover); color: var(--sv-oscuro); }
+
+/* Persona 2: imágenes de las tarjetas de producto, todas del mismo alto */
+.card-img-top { aspect-ratio: 4 / 3; object-fit: cover; }
