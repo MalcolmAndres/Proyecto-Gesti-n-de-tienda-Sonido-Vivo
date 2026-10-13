@@ -1,5 +1,6 @@
 // ===== ZONA 1: IMPORTS =====
 import usuariosIniciales from "./data/usuarios.json";
+import pedidosIniciales from "./data/pedidos.json";
 
 // ===== ZONA 2: FUNCIONES DE AYUDA =====
 const delay = (ms = 300) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -23,6 +24,7 @@ const siguienteId = (lista) => Math.max(0, ...lista.map((x) => x.id)) + 1;
 // ===== ZONA 3: BASE DE DATOS EN MEMORIA =====
 const db = {
   usuarios: cargar("usuarios", usuariosIniciales),
+  pedidos: cargar("pedidos", pedidosIniciales),
 };
 
 // ===== ZONA 4: API FALSA =====
@@ -75,4 +77,24 @@ export const mockApi = {
   },
 
   // ----- Productos (Persona 2) y Pedidos (Persona 3) van aquí abajo -----
+
+  // ----- Pedidos (Persona 3) -----
+
+  async crearPedido(datos) {
+    await delay();
+
+    const nuevoPedido = {
+      ...datos,
+      id: siguienteId(db.pedidos),
+      fecha: new Date().toISOString(),
+      estado: "EN_PREPARACION",
+    };
+
+    db.pedidos.push(nuevoPedido);
+
+    guardar("pedidos", db.pedidos);
+
+    return nuevoPedido;
+  },
+
 };
