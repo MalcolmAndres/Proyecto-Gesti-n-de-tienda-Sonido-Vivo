@@ -2,22 +2,31 @@ import { useCart } from "../../hooks/useCart";
 import { useState } from "react";
 import puntosRetiro from "../../mocks/data/puntosRetiro.json";
 import Mapa from "../../components/Mapa";
+import { useAuth } from "../../hooks/useAuth";
+import { crearPedido } from "../../services/pedidosService";
 
 export default function Checkout() {
 
-  // Obtenemos productos y total carrito.
-  const { carrito, totalCarrito } = useCart();
+  const { carrito, totalCarrito, vaciarCarrito } = useCart();// se obtiene los productos y total de carrito
+  const { usuario } = useAuth();// se obtiene el usuario que inició sesión
   const [tipoEntrega, setTipoEntrega] = useState("retiro");
   const [direccion, setDireccion] = useState("");
   const [puntoRetiro, setPuntoRetiro] = useState("");
-  const [mensaje, setMensaje] = useState(""); // Mensaje validación pedido
+  const [mensaje, setMensaje] = useState(""); // mensaje validación pedido
+  const [procesando, setProcesando] = useState(false);
 
+  // valida los datos de entrega y registra el pedido
+  const validarPedido = async () => {
 
-  // Valida los datos de entrega antes de confirmar
-  const validarPedido = () => {
+    if (procesando) return;
 
     if (carrito.length === 0) {
       setMensaje("El carrito está vacío.");
+      return;
+    }
+
+    if (!usuario) {
+      setMensaje("Debe iniciar sesión para confirmar el pedido.");
       return;
     }
 
@@ -31,15 +40,55 @@ export default function Checkout() {
       return;
     }
 
-    setMensaje("Los datos del pedido son correctos.");
+    const datosPedido = {
+      usuarioId: usuario.id,
+      productos: carrito.map((producto) => ({
+        id: producto.id,
+        nombre: producto.nombre,
+        precio: producto.precio,
+        cantidad: producto.cantidad,
+      })),
+      total: totalCarrito,
+      tipoEntrega,
+      direccion: tipoEntrega === "domicilio" ? direccion.trim() : null,
+      puntoRetiro: tipoEntrega === "retiro" ? Number(puntoRetiro) : null,
+    };
+
+    try {
+      setProcesando(true);
+      setMensaje("");
+
+      const pedido = await crearPedido(datosPedido);
+
+      vaciarCarrito();
+
+      setMensaje(`Pedido N° ${pedido.id} registrado correctamente.`);
+
+    } catch (error) {
+      setMensaje(error.message || "No se pudo registrar el pedido.");
+    } finally {
+      setProcesando(false);
+    }
   };
+
 
   return (
     <main className="container my-4">
 
       <h2>Confirmar pedido</h2>
 
-      <h4 className="mt-4">Resumen de compra</h4>
+      {/*mensaje validación*/}
+      {mensaje && (
+
+        <div className="alert alert-info mt-4" role="alert">
+
+          {mensaje}
+
+        </div>
+
+      )}
+
+      <h3 className="mt-4">Resumen de compra</h3>
 
       {carrito.length === 0 ? (
         <p>No tienes productos para comprar.</p>
@@ -72,7 +121,7 @@ export default function Checkout() {
           {/*Selección del tipo de entrega*/}
           <section className="mt-4">
 
-            <h6>Tipo de entrega</h6>
+            <h5>Tipo de entrega</h5>
 
             <div className="form-check">
 
@@ -173,17 +222,6 @@ export default function Checkout() {
 
           </section>
 
-          {/*mensaje validación*/}
-          {mensaje && (
-
-            <div className="alert alert-info mt-4" role="alert">
-
-              {mensaje}
-
-            </div>
-
-          )}
-
           {/*validar pedido*/}
 
           <button
@@ -191,8 +229,9 @@ export default function Checkout() {
             type="button"
             className="btn btn-warning mt-3"
             onClick={validarPedido}
+            disabled={procesando}
           >
-            Confirmar pedido
+            {procesando ? "Registrando pedido..." : "Confirmar pedido"}
 
           </button>
 
@@ -202,5 +241,5 @@ export default function Checkout() {
     </main>
 
   );
-  
+
 }

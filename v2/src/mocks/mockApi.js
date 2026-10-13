@@ -97,4 +97,13 @@ export const mockApi = {
     return nuevoPedido;
   },
 
+  // se obtienen los pedidos del cliente
+  async getPedidosPorUsuario(usuarioId) {
+    await delay();
+
+    return db.pedidos.filter(
+      (pedido) => String(pedido.usuarioId) === String(usuarioId)
+    );
+  },
+
 };
