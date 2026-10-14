@@ -14,6 +14,7 @@ export default function Checkout() {
   const [puntoRetiro, setPuntoRetiro] = useState("");
   const [mensaje, setMensaje] = useState(""); // mensaje validación pedido
   const [procesando, setProcesando] = useState(false);
+  const [metodoPago, setMetodoPago] = useState("");
 
   // valida los datos de entrega y registra el pedido
   const validarPedido = async () => {
@@ -40,6 +41,11 @@ export default function Checkout() {
       return;
     }
 
+    if (!metodoPago) {
+      setMensaje("Debe seleccionar un método de pago.");
+      return;
+    }
+
     const datosPedido = {
       usuarioId: usuario.id,
       productos: carrito.map((producto) => ({
@@ -49,6 +55,7 @@ export default function Checkout() {
         cantidad: producto.cantidad,
       })),
       total: totalCarrito,
+      metodoPago,
       tipoEntrega,
       direccion: tipoEntrega === "domicilio" ? direccion.trim() : null,
       puntoRetiro: tipoEntrega === "retiro" ? Number(puntoRetiro) : null,
@@ -78,15 +85,6 @@ export default function Checkout() {
       <h2>Confirmar pedido</h2>
 
       {/*mensaje validación*/}
-      {mensaje && (
-
-        <div className="alert alert-info mt-4" role="alert">
-
-          {mensaje}
-
-        </div>
-
-      )}
 
       <h3 className="mt-4">Resumen de compra</h3>
 
@@ -222,7 +220,42 @@ export default function Checkout() {
 
           </section>
 
+
+          {/* Selección del método de pago */}
+          <section className="mt-4">
+            <h5>Método de pago</h5>
+
+            <div className="mb-3">
+              <label htmlFor="metodoPago" className="form-label">
+                Seleccione cómo desea pagar
+              </label>
+
+              <select
+                id="metodoPago"
+                className="form-select"
+                value={metodoPago}
+                onChange={(e) => setMetodoPago(e.target.value)}
+              >
+                <option value="">Seleccione un método de pago</option>
+                <option value="TRANSFERENCIA">Transferencia bancaria</option>
+                <option value="TARJETA">Tarjeta de débito o crédito</option>
+                <option value="EFECTIVO">Efectivo al retirar</option>
+              </select>
+            </div>
+
+            <p className="text-muted small">
+              El pago es simulado. No se realizarán cobros reales.
+            </p>
+          </section>
+
+
           {/*validar pedido*/}
+
+          {mensaje && (
+            <div className="alert alert-info mt-3" role="alert">
+              {mensaje}
+            </div>
+          )}
 
           <button
 
