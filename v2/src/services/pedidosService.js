@@ -20,3 +20,19 @@ export const getPedidosPorUsuario = (usuarioId) => {
     throw new Error("La consulta de pedidos con el backend aún no está implementada.");
 };
 
+export const getPedidos = () => {
+    if (USE_MOCKS) {
+        return mockApi.getPedidos();
+    }
+
+    throw new Error("La consulta de pedidos con el backend aún no está implementada.");
+};
+
+export const actualizarEstadoPedido = (id, estado) => {
+    if (USE_MOCKS) {
+        return mockApi.actualizarEstadoPedido(id, estado);
+    }
+
+    throw new Error("La actualización de pedidos con el backend aún no está implementada.");
+};
+

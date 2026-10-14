@@ -173,4 +173,52 @@ export const mockApi = {
     );
   },
 
+  // Obtener todos los pedidos para el vendedor
+  async getPedidos() {
+    await delay();
+
+    return [...db.pedidos];
+  },
+
+  // Actualizar el estado de un pedido
+  async actualizarEstadoPedido(id, nuevoEstado) {
+    await delay();
+
+    const estadosPermitidos = [
+      "EN_PREPARACION",
+      "DESPACHADO",
+      "ENTREGADO"
+    ];
+
+    if (!estadosPermitidos.includes(nuevoEstado)) {
+      throw new Error("Estado de pedido no válido");
+    }
+
+    const pedido = db.pedidos.find(
+      (p) => String(p.id) === String(id)
+    );
+
+    if (!pedido) {
+      throw new Error("Pedido no encontrado");
+    }
+
+    const transicionesPermitidas = {
+
+      EN_PREPARACION: "DESPACHADO",
+      DESPACHADO: "ENTREGADO",
+      ENTREGADO: null
+      
+    };
+
+    if (transicionesPermitidas[pedido.estado] !== nuevoEstado) {
+      throw new Error("No se permite cambiar a ese estado");
+    }
+
+    pedido.estado = nuevoEstado;
+
+    guardar("pedidos", db.pedidos);
+
+    return pedido;
+  },
+
 };
