@@ -95,6 +95,18 @@ export default function MisPedidos() {
             </p>
 
             <p>
+              Método de pago: {
+                pedido.metodoPago === "TARJETA"
+                  ? "Tarjeta de débito o crédito"
+                  : pedido.metodoPago === "TRANSFERENCIA"
+                    ? "Transferencia bancaria"
+                    : pedido.metodoPago === "EFECTIVO"
+                      ? "Efectivo al retirar"
+                      : "No registrado"
+              }
+            </p>
+
+            <p>
               Tipo de entrega: {pedido.tipoEntrega === "retiro"
                 ? "Retiro en tienda"
                 : "Despacho a domicilio"}

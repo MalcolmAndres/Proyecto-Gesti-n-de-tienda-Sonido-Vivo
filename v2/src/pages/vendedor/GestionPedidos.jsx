@@ -1,4 +1,4 @@
-
+import puntosRetiro from "../../mocks/data/puntosRetiro.json";
 import { useEffect, useState } from "react";
 import {
   getPedidos,
@@ -112,6 +112,18 @@ export default function GestionPedidos() {
             </p>
 
             <p>
+              Método de pago: {
+                pedido.metodoPago === "TARJETA"
+                  ? "Tarjeta de débito o crédito"
+                  : pedido.metodoPago === "TRANSFERENCIA"
+                    ? "Transferencia bancaria"
+                    : pedido.metodoPago === "EFECTIVO"
+                      ? "Efectivo al retirar"
+                      : "No registrado"
+              }
+            </p>
+
+            <p>
               Tipo de entrega: {
                 pedido.tipoEntrega === "retiro"
                   ? "Retiro en tienda"
@@ -126,9 +138,13 @@ export default function GestionPedidos() {
             )}
 
             {pedido.tipoEntrega === "retiro" && (
-
-              <p>Punto de retiro ID: {pedido.puntoRetiro}</p>
-
+              <p>
+                Punto de retiro: {
+                  puntosRetiro.find(
+                    (punto) => String(punto.id) === String(pedido.puntoRetiro)
+                  )?.nombre || "No disponible"
+                }
+              </p>
             )}
 
             <h6>Productos</h6>
@@ -189,7 +205,7 @@ export default function GestionPedidos() {
                 Entregado
 
               </option>
-              
+
             </select>
 
           </div>
