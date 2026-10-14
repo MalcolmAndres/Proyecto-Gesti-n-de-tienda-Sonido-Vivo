@@ -1,6 +1,7 @@
 // ===== ZONA 1: IMPORTS =====
 import usuariosIniciales from "./data/usuarios.json";
 import productosIniciales from "./data/productos.json";
+import pedidosIniciales from "./data/pedidos.json";
 
 // ===== ZONA 2: FUNCIONES DE AYUDA =====
 const delay = (ms = 300) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -25,6 +26,7 @@ const siguienteId = (lista) => Math.max(0, ...lista.map((x) => x.id)) + 1;
 const db = {
   usuarios: cargar("usuarios", usuariosIniciales),
   productos: cargar("productos", productosIniciales),
+  pedidos: cargar("pedidos", pedidosIniciales),
 };
 
 // ===== ZONA 4: API FALSA =====
@@ -76,49 +78,66 @@ export const mockApi = {
     return sinPassword(usuario);
   },
 
- // ----- Productos (Persona 2) -----
+  // ----- Productos (Persona 2) -----
 
- async getProductos({ categoria = "", busqueda = "" } = {}) {
+  async getProductos({ categoria = "", busqueda = "" } = {}) {
     await delay();
+
     const texto = busqueda.trim().toLowerCase();
+
     return db.productos.filter(
       (p) =>
         p.activo &&
         (!categoria || p.categoria === categoria) &&
-        (!texto || p.nombre.toLowerCase().includes(texto) || p.marca.toLowerCase().includes(texto))
+        (!texto ||
+          p.nombre.toLowerCase().includes(texto) ||
+          p.marca.toLowerCase().includes(texto))
     );
   },
 
   async getProducto(id) {
     await delay();
+
     const producto = db.productos.find((p) => p.id === id);
+
     if (!producto) throw new Error("Producto no encontrado");
+
     return producto;
   },
 
   async getCategorias() {
     await delay(100);
+
     return [...new Set(db.productos.map((p) => p.categoria))];
   },
 
   async actualizarStock(id, stock) {
     await delay();
+
     if (!Number.isInteger(stock) || stock < 0) {
       throw new Error("El stock debe ser un número entero, 0 o mayor");
     }
+
     const producto = db.productos.find((p) => p.id === id);
+
     if (!producto) throw new Error("Producto no encontrado");
+
     producto.stock = stock;
+
     guardar("productos", db.productos);
+
     return producto;
   },
 
   async getReporteVentas({ desde, hasta }) {
     await delay();
+
     const pedidos = (db.pedidos ?? []).filter((p) => {
       const dia = p.fecha.slice(0, 10);
+
       return (!desde || dia >= desde) && (!hasta || dia <= hasta);
     });
+
     return {
       cantidadPedidos: pedidos.length,
       totalVentas: pedidos.reduce((suma, p) => suma + p.total, 0),
@@ -126,6 +145,32 @@ export const mockApi = {
     };
   },
 
-  // ----- Pedidos (Persona 3) van aquí abajo -----
-  
+  // ----- Pedidos (Persona 3) -----
+
+  async crearPedido(datos) {
+    await delay();
+
+    const nuevoPedido = {
+      ...datos,
+      id: siguienteId(db.pedidos),
+      fecha: new Date().toISOString(),
+      estado: "EN_PREPARACION",
+    };
+
+    db.pedidos.push(nuevoPedido);
+
+    guardar("pedidos", db.pedidos);
+
+    return nuevoPedido;
+  },
+
+  // Se obtienen los pedidos del cliente
+  async getPedidosPorUsuario(usuarioId) {
+    await delay();
+
+    return db.pedidos.filter(
+      (pedido) => String(pedido.usuarioId) === String(usuarioId)
+    );
+  },
+
 };
