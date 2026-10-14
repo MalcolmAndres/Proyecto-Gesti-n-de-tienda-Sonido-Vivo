@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
-import { getPedidosPorUsuario } from "../../services/pedidosService";
+import { getMisPedidos } from "../../services/pedidosService";
 import puntosRetiro from "../../mocks/data/puntosRetiro.json";
 
 export default function MisPedidos() {
@@ -21,7 +21,7 @@ export default function MisPedidos() {
         setCargando(true);
         setError("");
 
-        const resultado = await getPedidosPorUsuario(usuario.id);
+        const resultado = await getMisPedidos();
 
         if (activo) {
           setPedidos(resultado);

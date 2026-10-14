@@ -12,7 +12,7 @@ export default function DetalleProducto() {
   if (cargando) return <Cargando />;
   if (error) return <MensajeError mensaje={error} />;
 
-  eturn (
+  return (
   <>
     <Link to="/catalogo" className="small">← Volver al catálogo</Link>
     <div className="row g-4 mt-1">
@@ -27,7 +27,6 @@ export default function DetalleProducto() {
         <p className={producto.stock > 0 ? "text-success" : "text-danger"}>
           {producto.stock > 0 ? `${producto.stock} unidades disponibles` : "Sin stock"}
         </p>
-        {/* Persona 3 agrega aquí el botón "Agregar al carrito" */}
       </div>
     </div>
   </>

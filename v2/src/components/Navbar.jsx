@@ -32,7 +32,7 @@ export default function Navbar() {
   const salir = () => {
     setAbierto(false);
     logout();
-    navigate("/login");
+    navigate("/");
   };
 
   return (

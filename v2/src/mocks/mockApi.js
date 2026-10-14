@@ -28,6 +28,11 @@ const db = {
   productos: cargar("productos", productosIniciales),
   pedidos: cargar("pedidos", pedidosIniciales),
 };
+const usuarioDelToken = () => {
+  const token = localStorage.getItem("token") || "";
+  const id = Number(token.replace("mock-token-", ""));
+  return db.usuarios.find((u) => u.id === id);
+};
 
 // ===== ZONA 4: API FALSA =====
 export const mockApi = {
@@ -148,6 +153,8 @@ export const mockApi = {
 
   async crearPedido(datos) {
     await delay();
+    const cliente = usuarioDelToken();
+    if (!cliente) throw new Error("Debes iniciar sesión para comprar.");
 
     // Comprobar que existan productos en el pedido
     if (!Array.isArray(datos.productos) || datos.productos.length === 0) {
@@ -193,13 +200,26 @@ export const mockApi = {
         ? { ...producto, stock: producto.stock - cantidad }
         : producto;
     });
+    const productosPedido = [...cantidades].map(([id, cantidad]) => {
+      const producto = db.productos.find((p) => String(p.id) === id);
+      return { id: producto.id, nombre: producto.nombre, precio: producto.precio, cantidad };
+    });
 
     const nuevoPedido = {
-      ...datos,
       id: siguienteId(db.pedidos),
+      usuarioId: cliente.id,
+      clienteNombre: cliente.nombre,
+      productos: productosPedido,
+      total: productosPedido.reduce((suma, p) => suma + p.precio * p.cantidad, 0),
+      metodoPago: datos.metodoPago,
+      tipoEntrega: datos.tipoEntrega,
+      direccion: datos.direccion ?? null,
+      puntoRetiro: datos.puntoRetiro ?? null,
       fecha: new Date().toISOString(),
       estado: "EN_PREPARACION",
     };
+
+
 
     // Guardar los cambios
     db.productos = productosActualizados;
@@ -213,12 +233,10 @@ export const mockApi = {
 
 
   // Se obtienen los pedidos del cliente
-  async getPedidosPorUsuario(usuarioId) {
+ async getMisPedidos() {
     await delay();
-
-    return db.pedidos.filter(
-      (pedido) => String(pedido.usuarioId) === String(usuarioId)
-    );
+    const cliente = usuarioDelToken();
+    return db.pedidos.filter((pedido) => pedido.usuarioId === cliente?.id);
   },
 
   // Obtener todos los pedidos para el vendedor

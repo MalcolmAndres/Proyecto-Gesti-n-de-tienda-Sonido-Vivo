@@ -18,18 +18,16 @@ import GestionStock from "../pages/vendedor/GestionStock";
 import Usuarios from "../pages/admin/Usuarios";
 import Reportes from "../pages/admin/Reportes";
 import NoAutorizado from "../pages/NoAutorizado";
-
+import Home from "../pages/Home";
 const { ADMIN, VENDEDOR, CLIENTE } = ROLES;
 
-function Inicio() {
-  const { usuario } = useAuth();
-  return <Navigate to={usuario ? INICIO_POR_ROL[usuario.rol] : "/login"} replace />;
-}
+
 
 export default function AppRouter() {
   return (
     <Routes>
       {/* Públicas: solo login y registro (regla de seguridad del enunciado) */}
+      <Route path="/" element={<Home />} />
       <Route element={<PublicLayout />}>
         <Route path="/login" element={<Login />} />
         <Route path="/registro" element={<Registro />} />
@@ -38,7 +36,6 @@ export default function AppRouter() {
       {/* Todo lo demás requiere sesión */}
       <Route element={<ProtectedRoute />}>
         <Route element={<MainLayout />}>
-          <Route path="/" element={<Inicio />} />
           <Route path="/no-autorizado" element={<NoAutorizado />} />
 
           {/* Cualquier usuario logueado */}
@@ -67,7 +64,7 @@ export default function AppRouter() {
         </Route>
       </Route>
 
-      <Route path="*" element={<Inicio />} />
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 }
