@@ -1,6 +1,7 @@
 // ===== ZONA 1: IMPORTS =====
 import usuariosIniciales from "./data/usuarios.json";
 import productosIniciales from "./data/productos.json";
+import pedidosIniciales from "./data/pedidos.json";
 
 // ===== ZONA 2: FUNCIONES DE AYUDA =====
 const delay = (ms = 300) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -25,6 +26,7 @@ const siguienteId = (lista) => Math.max(0, ...lista.map((x) => x.id)) + 1;
 const db = {
   usuarios: cargar("usuarios", usuariosIniciales),
   productos: cargar("productos", productosIniciales),
+  pedidos: cargar("pedidos", pedidosIniciales),
 };
 
 // ===== ZONA 4: API FALSA =====
@@ -76,49 +78,66 @@ export const mockApi = {
     return sinPassword(usuario);
   },
 
- // ----- Productos (Persona 2) -----
+  // ----- Productos (Persona 2) -----
 
- async getProductos({ categoria = "", busqueda = "" } = {}) {
+  async getProductos({ categoria = "", busqueda = "" } = {}) {
     await delay();
+
     const texto = busqueda.trim().toLowerCase();
+
     return db.productos.filter(
       (p) =>
         p.activo &&
         (!categoria || p.categoria === categoria) &&
-        (!texto || p.nombre.toLowerCase().includes(texto) || p.marca.toLowerCase().includes(texto))
+        (!texto ||
+          p.nombre.toLowerCase().includes(texto) ||
+          p.marca.toLowerCase().includes(texto))
     );
   },
 
   async getProducto(id) {
     await delay();
+
     const producto = db.productos.find((p) => p.id === id);
+
     if (!producto) throw new Error("Producto no encontrado");
+
     return producto;
   },
 
   async getCategorias() {
     await delay(100);
+
     return [...new Set(db.productos.map((p) => p.categoria))];
   },
 
   async actualizarStock(id, stock) {
     await delay();
+
     if (!Number.isInteger(stock) || stock < 0) {
       throw new Error("El stock debe ser un número entero, 0 o mayor");
     }
+
     const producto = db.productos.find((p) => p.id === id);
+
     if (!producto) throw new Error("Producto no encontrado");
+
     producto.stock = stock;
+
     guardar("productos", db.productos);
+
     return producto;
   },
 
   async getReporteVentas({ desde, hasta }) {
     await delay();
+
     const pedidos = (db.pedidos ?? []).filter((p) => {
       const dia = p.fecha.slice(0, 10);
+
       return (!desde || dia >= desde) && (!hasta || dia <= hasta);
     });
+
     return {
       cantidadPedidos: pedidos.length,
       totalVentas: pedidos.reduce((suma, p) => suma + p.total, 0),
@@ -126,6 +145,128 @@ export const mockApi = {
     };
   },
 
-  // ----- Pedidos (Persona 3) van aquí abajo -----
-  
+
+  async crearPedido(datos) {
+    await delay();
+
+    // Comprobar que existan productos en el pedido
+    if (!Array.isArray(datos.productos) || datos.productos.length === 0) {
+      throw new Error("El pedido no contiene productos.");
+    }
+
+    // Agrupar cantidades por producto
+    const cantidades = new Map();
+
+    for (const item of datos.productos) {
+      if (!Number.isInteger(item.cantidad) || item.cantidad <= 0) {
+        throw new Error("La cantidad de productos no es válida.");
+      }
+
+      cantidades.set(
+        String(item.id),
+        (cantidades.get(String(item.id)) || 0) + item.cantidad
+      );
+    }
+
+    // Validar stock antes de registrar la compra
+    for (const [id, cantidad] of cantidades) {
+      const producto = db.productos.find(
+        (p) => String(p.id) === id
+      );
+
+      if (!producto || !producto.activo) {
+        throw new Error("Uno de los productos ya no está disponible.");
+      }
+
+      if (producto.stock < cantidad) {
+        throw new Error(
+          `Stock insuficiente para ${producto.nombre}. Disponibles: ${producto.stock}`
+        );
+      }
+    }
+
+    // Preparar los productos con el stock actualizado
+    const productosActualizados = db.productos.map((producto) => {
+      const cantidad = cantidades.get(String(producto.id)) || 0;
+
+      return cantidad > 0
+        ? { ...producto, stock: producto.stock - cantidad }
+        : producto;
+    });
+
+    const nuevoPedido = {
+      ...datos,
+      id: siguienteId(db.pedidos),
+      fecha: new Date().toISOString(),
+      estado: "EN_PREPARACION",
+    };
+
+    // Guardar los cambios
+    db.productos = productosActualizados;
+    db.pedidos.push(nuevoPedido);
+
+    guardar("productos", db.productos);
+    guardar("pedidos", db.pedidos);
+
+    return nuevoPedido;
+  },
+
+
+  // Se obtienen los pedidos del cliente
+  async getPedidosPorUsuario(usuarioId) {
+    await delay();
+
+    return db.pedidos.filter(
+      (pedido) => String(pedido.usuarioId) === String(usuarioId)
+    );
+  },
+
+  // Obtener todos los pedidos para el vendedor
+  async getPedidos() {
+    await delay();
+
+    return [...db.pedidos];
+  },
+
+  // Actualizar el estado de un pedido
+  async actualizarEstadoPedido(id, nuevoEstado) {
+    await delay();
+
+    const estadosPermitidos = [
+      "EN_PREPARACION",
+      "DESPACHADO",
+      "ENTREGADO"
+    ];
+
+    if (!estadosPermitidos.includes(nuevoEstado)) {
+      throw new Error("Estado de pedido no válido");
+    }
+
+    const pedido = db.pedidos.find(
+      (p) => String(p.id) === String(id)
+    );
+
+    if (!pedido) {
+      throw new Error("Pedido no encontrado");
+    }
+
+    const transicionesPermitidas = {
+
+      EN_PREPARACION: "DESPACHADO",
+      DESPACHADO: "ENTREGADO",
+      ENTREGADO: null
+
+    };
+
+    if (transicionesPermitidas[pedido.estado] !== nuevoEstado) {
+      throw new Error("No se permite cambiar a ese estado");
+    }
+
+    pedido.estado = nuevoEstado;
+
+    guardar("pedidos", db.pedidos);
+
+    return pedido;
+  },
+
 };
