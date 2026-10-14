@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet,Link } from "react-router-dom";
 
 export default function PublicLayout() {
   return (
@@ -8,6 +8,7 @@ export default function PublicLayout() {
         <div className="card-body p-4">
           <h1 className="brand text-center mb-4">Sonido Vivo</h1>
           <Outlet />
+          <p className="text-center mt-3 mb-0 small"><Link to="/">← Volver al inicio</Link></p>
         </div>
       </div>
     </div>

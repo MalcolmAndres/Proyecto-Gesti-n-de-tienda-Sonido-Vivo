@@ -45,21 +45,17 @@ export default function Checkout() {
       setMensaje("Debe seleccionar un método de pago.");
       return;
     }
-
     const datosPedido = {
-      usuarioId: usuario.id,
       productos: carrito.map((producto) => ({
         id: producto.id,
-        nombre: producto.nombre,
-        precio: producto.precio,
         cantidad: producto.cantidad,
       })),
-      total: totalCarrito,
       metodoPago,
       tipoEntrega,
       direccion: tipoEntrega === "domicilio" ? direccion.trim() : null,
       puntoRetiro: tipoEntrega === "retiro" ? Number(puntoRetiro) : null,
     };
+
 
     try {
       setProcesando(true);

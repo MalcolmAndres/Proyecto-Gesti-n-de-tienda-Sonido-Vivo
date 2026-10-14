@@ -12,11 +12,10 @@ export const crearPedido = (datos) => {
 };
 
 // se obtienen los pedidos registrados por un cliente
-export const getPedidosPorUsuario = (usuarioId) => {
+export const getMisPedidos = () => {
     if (USE_MOCKS) {
-        return mockApi.getPedidosPorUsuario(usuarioId);
+        return mockApi.getMisPedidos();
     }
-
     throw new Error("La consulta de pedidos con el backend aún no está implementada.");
 };
 
