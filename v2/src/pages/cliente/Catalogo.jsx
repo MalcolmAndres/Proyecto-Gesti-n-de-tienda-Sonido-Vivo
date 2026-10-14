@@ -1,3 +1,4 @@
+import { useCart } from "../../hooks/useCart";
 import { useState } from "react";
 import { useFetch } from "../../hooks/useFetch";
 import { getCategorias, getProductos } from "../../services/productosService";
@@ -6,6 +7,7 @@ import Cargando from "../../components/Cargando";
 import MensajeError from "../../components/MensajeError";
 
 export default function Catalogo() {
+  const { agregarProducto } = useCart();
   const [categoria, setCategoria] = useState("");
   const [busqueda, setBusqueda] = useState("");
 
@@ -43,7 +45,10 @@ export default function Catalogo() {
           {productos?.length === 0 && <p className="text-muted">No hay productos que coincidan.</p>}
           {productos?.map((p) => (
             <div className="col-12 col-sm-6 col-lg-3" key={p.id}>
-              <ProductCard producto={p} />
+              <ProductCard
+                producto={p}
+                onAgregar={agregarProducto}
+              />
             </div>
           ))}
         </div>

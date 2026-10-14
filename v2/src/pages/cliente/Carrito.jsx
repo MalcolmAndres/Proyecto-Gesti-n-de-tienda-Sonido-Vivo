@@ -1,5 +1,4 @@
 import { useCart } from "../../hooks/useCart";
-import instrumentos from "../../../../v1/data/instrumentos.json";
 import { Link } from "react-router-dom";
 
 export default function Carrito() {
@@ -7,38 +6,16 @@ export default function Carrito() {
   const {
     carrito,
     totalCarrito,
-    agregarProducto,
     aumentarCantidad,
     disminuirCantidad,
     eliminarProducto,
     vaciarCarrito
   } = useCart();
 
-  const productosPrueba = instrumentos.slice(0, 3);
-
   return (
     <main className="container my-4">
 
       <h2>Mi carrito de compras</h2>
-
-      {/* Botones temporales para probar productos */}
-      <div className="d-flex flex-wrap gap-2 mb-3">
-
-        {productosPrueba.map((producto) => (
-
-          <button
-
-            key={producto.id}
-
-            className="btn btn-warning"
-            onClick={() => agregarProducto(producto)}
-          >
-            Agregar {producto.nombre}
-          </button>
-
-        ))}
-
-      </div>
 
       {carrito.length === 0 ? (
         <p>Tu carrito está vacío.</p>
