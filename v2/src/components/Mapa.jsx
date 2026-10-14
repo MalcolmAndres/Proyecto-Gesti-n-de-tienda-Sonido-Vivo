@@ -1,6 +1,20 @@
 import { useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+import L from "leaflet";
+import iconUrl from "leaflet/dist/images/marker-icon.png";
+import iconRetinaUrl from "leaflet/dist/images/marker-icon-2x.png";
+import shadowUrl from "leaflet/dist/images/marker-shadow.png";
+
+const iconoMarcador = L.icon({
+    iconUrl,
+    iconRetinaUrl,
+    shadowUrl,
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41],
+});
 
 import puntosRetiro from "../mocks/data/puntosRetiro.json";
 
@@ -14,9 +28,10 @@ function CentrarMapa({ puntoSeleccionado }) {
         );
 
         if (punto) {
-            map.setView(
+            map.flyTo(
                 [punto.latitud, punto.longitud],
-                15
+                15,
+                { duration: 1 }
             );
         }
     }, [puntoSeleccionado, map]);
@@ -48,6 +63,7 @@ export default function Mapa({ puntoSeleccionado }) {
                     <Marker
                         key={punto.id}
                         position={[punto.latitud, punto.longitud]}
+                        icon={iconoMarcador}
                     >
                         <Popup>
 
