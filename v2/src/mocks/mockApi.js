@@ -145,10 +145,54 @@ export const mockApi = {
     };
   },
 
-  // ----- Pedidos (Persona 3) -----
 
   async crearPedido(datos) {
     await delay();
+
+    // Comprobar que existan productos en el pedido
+    if (!Array.isArray(datos.productos) || datos.productos.length === 0) {
+      throw new Error("El pedido no contiene productos.");
+    }
+
+    // Agrupar cantidades por producto
+    const cantidades = new Map();
+
+    for (const item of datos.productos) {
+      if (!Number.isInteger(item.cantidad) || item.cantidad <= 0) {
+        throw new Error("La cantidad de productos no es válida.");
+      }
+
+      cantidades.set(
+        String(item.id),
+        (cantidades.get(String(item.id)) || 0) + item.cantidad
+      );
+    }
+
+    // Validar stock antes de registrar la compra
+    for (const [id, cantidad] of cantidades) {
+      const producto = db.productos.find(
+        (p) => String(p.id) === id
+      );
+
+      if (!producto || !producto.activo) {
+        throw new Error("Uno de los productos ya no está disponible.");
+      }
+
+      if (producto.stock < cantidad) {
+        throw new Error(
+          `Stock insuficiente para ${producto.nombre}. Disponibles: ${producto.stock}`
+        );
+      }
+    }
+
+    // Preparar los productos con el stock actualizado
+    const productosActualizados = db.productos.map((producto) => {
+      const cantidad = cantidades.get(String(producto.id)) || 0;
+
+      return cantidad > 0
+        ? { ...producto, stock: producto.stock - cantidad }
+        : producto;
+    });
 
     const nuevoPedido = {
       ...datos,
@@ -157,12 +201,16 @@ export const mockApi = {
       estado: "EN_PREPARACION",
     };
 
+    // Guardar los cambios
+    db.productos = productosActualizados;
     db.pedidos.push(nuevoPedido);
 
+    guardar("productos", db.productos);
     guardar("pedidos", db.pedidos);
 
     return nuevoPedido;
   },
+
 
   // Se obtienen los pedidos del cliente
   async getPedidosPorUsuario(usuarioId) {
@@ -207,7 +255,7 @@ export const mockApi = {
       EN_PREPARACION: "DESPACHADO",
       DESPACHADO: "ENTREGADO",
       ENTREGADO: null
-      
+
     };
 
     if (transicionesPermitidas[pedido.estado] !== nuevoEstado) {
