@@ -1,4 +1,35 @@
-// Persona 2
+import { Link, useParams } from "react-router-dom";
+import { useFetch } from "../../hooks/useFetch";
+import { getProducto } from "../../services/productosService";
+import { formatPrecio } from "../../utils/formato";
+import Cargando from "../../components/Cargando";
+import MensajeError from "../../components/MensajeError";
+
 export default function DetalleProducto() {
-  return <h1>Detalle de producto</h1>;
+  const { id } = useParams();
+  const { data: producto, cargando, error } = useFetch(() => getProducto(Number(id)), [id]);
+
+  if (cargando) return <Cargando />;
+  if (error) return <MensajeError mensaje={error} />;
+
+  eturn (
+  <>
+    <Link to="/catalogo" className="small">← Volver al catálogo</Link>
+    <div className="row g-4 mt-1">
+      <div className="col-12 col-md-6">
+        <img src={producto.imagenUrl} alt={producto.nombre} className="img-fluid rounded" />
+      </div>
+      <div className="col-12 col-md-6">
+        <small className="text-muted">{producto.marca} {producto.modelo} · {producto.categoria}</small>
+        <h1 className="mt-1">{producto.nombre}</h1>
+        <p className="h4">{formatPrecio(producto.precio)}</p>
+        <p>{producto.descripcion}</p>
+        <p className={producto.stock > 0 ? "text-success" : "text-danger"}>
+          {producto.stock > 0 ? `${producto.stock} unidades disponibles` : "Sin stock"}
+        </p>
+        {/* Persona 3 agrega aquí el botón "Agregar al carrito" */}
+      </div>
+    </div>
+  </>
+);
 }
