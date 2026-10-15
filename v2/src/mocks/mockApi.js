@@ -2,7 +2,7 @@
 import usuariosIniciales from "./data/usuarios.json";
 import productosIniciales from "./data/productos.json";
 import pedidosIniciales from "./data/pedidos.json";
-
+import puntosRetiro from "./data/puntosRetiro.json";
 // ===== ZONA 2: FUNCIONES DE AYUDA =====
 const delay = (ms = 300) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -83,7 +83,7 @@ export const mockApi = {
     return sinPassword(usuario);
   },
 
-  // ----- Productos (Persona 2) -----
+  
 
   async getProductos({ categoria = "", busqueda = "" } = {}) {
     await delay();
@@ -285,6 +285,10 @@ export const mockApi = {
     guardar("pedidos", db.pedidos);
 
     return pedido;
+  },
+  async getPuntosRetiro() {
+    await delay(100);
+    return puntosRetiro;
   },
 
 };

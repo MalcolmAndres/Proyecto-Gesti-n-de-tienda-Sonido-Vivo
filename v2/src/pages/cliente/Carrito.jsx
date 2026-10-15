@@ -1,5 +1,6 @@
 import { useCart } from "../../hooks/useCart";
 import { Link } from "react-router-dom";
+import { formatPrecio } from "../../utils/formato";
 
 export default function Carrito() {
 
@@ -29,9 +30,9 @@ export default function Carrito() {
 
                 <h3>{producto.nombre}</h3>
 
-                <p>Precio: ${producto.precio.toLocaleString("es-CL")}</p>
+                <p>Precio: {formatPrecio(producto.precio)}</p>
 
-                <p>Subtotal: ${(producto.precio * producto.cantidad).toLocaleString("es-CL")}</p>
+                <p>Subtotal: {formatPrecio(producto.precio * producto.cantidad)}</p>
 
                 <p className="text-muted"> Stock disponible: {producto.stock}</p>
 
@@ -79,10 +80,10 @@ export default function Carrito() {
 
           )}
 
-          <h4>Total: ${totalCarrito.toLocaleString("es-CL")}</h4>
+          <h4>Total: {formatPrecio(totalCarrito)}</h4>
 
           {/*Continuar hacia la confirmación del pedido*/}
-          <Link to="/checkout" className="btn btn-warning mt-3 me-2">
+          <Link to="/checkout" className="btn btn-primario mt-3 me-2">
 
             Continuar compra
 

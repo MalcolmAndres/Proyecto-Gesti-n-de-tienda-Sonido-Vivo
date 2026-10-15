@@ -16,14 +16,14 @@ const iconoMarcador = L.icon({
     shadowSize: [41, 41],
 });
 
-import puntosRetiro from "../mocks/data/puntosRetiro.json";
+
 
 // Centrar el mapa cuando cambia el punto seleccionado.
-function CentrarMapa({ puntoSeleccionado }) {
+function CentrarMapa({ puntos, puntoSeleccionado }) {
     const map = useMap();
 
     useEffect(() => {
-        const punto = puntosRetiro.find(
+        const punto = puntos?.find(
             (item) => String(item.id) === String(puntoSeleccionado)
         );
 
@@ -34,12 +34,12 @@ function CentrarMapa({ puntoSeleccionado }) {
                 { duration: 1 }
             );
         }
-    }, [puntoSeleccionado, map]);
+    }, [puntos,puntoSeleccionado, map]);
 
     return null;
 }
 
-export default function Mapa({ puntoSeleccionado }) {
+export default function Mapa({ puntos,puntoSeleccionado }) {
 
     return (
         <div className="mt-4">
@@ -51,7 +51,7 @@ export default function Mapa({ puntoSeleccionado }) {
                 zoom={12}
                 style={{ height: "400px", width: "100%" }}
             >
-                <CentrarMapa puntoSeleccionado={puntoSeleccionado} />
+                <CentrarMapa puntos={puntos} puntoSeleccionado={puntoSeleccionado}/>
 
                 <TileLayer
                     attribution='&copy; OpenStreetMap contributors'
@@ -59,7 +59,7 @@ export default function Mapa({ puntoSeleccionado }) {
                 />
 
                 {/* Muestra los puntos de retiro disponibles */}
-                {puntosRetiro.map((punto) => (
+                {puntos?.map((punto) => (
                     <Marker
                         key={punto.id}
                         position={[punto.latitud, punto.longitud]}

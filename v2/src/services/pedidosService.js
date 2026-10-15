@@ -33,5 +33,13 @@ export const actualizarEstadoPedido = (id, estado) => {
     }
 
     throw new Error("La actualización de pedidos con el backend aún no está implementada.");
+    
+};
+export const getPuntosRetiro = () => {
+    if (USE_MOCKS) {
+        return mockApi.getPuntosRetiro();
+    }
+
+    throw new Error("La consulta de puntos de retiro con el backend aún no está implementada.");
 };
 
