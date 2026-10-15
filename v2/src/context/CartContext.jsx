@@ -1,16 +1,37 @@
 // importar heramientas de react
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
+import { useAuth } from "../hooks/useAuth";
 
 // crear contexto para compartir datos de carrito
 export const CartContext = createContext(null);
 
+
+// lee el carrito guardado en el navegador (o una lista vacía)
+const leerCarrito = () => {
+    try {
+        return JSON.parse(localStorage.getItem("carrito")) || [];
+    } catch {
+        return [];
+    }
+};
 
 // componente que permitirá compartir el carrito con otras partes de la aplicación
 
 export function CartProvider({ children }) { // children representa los componentes que están dentro de CartProvider
 
     // estado que almacena productos del carrito
-    const [carrito, setCarrito] = useState([]);
+    const [carrito, setCarrito] = useState(leerCarrito);
+    const { usuario } = useAuth();
+
+    // guarda el carrito cada vez que cambia
+    useEffect(() => {
+        localStorage.setItem("carrito", JSON.stringify(carrito));
+    }, [carrito]);
+
+    // vacía el carrito cuando se cierra sesión
+    useEffect(() => {
+        if (!usuario) setCarrito([]);
+    }, [usuario]);
 
 
 const agregarProducto = (producto) => {

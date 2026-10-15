@@ -1,4 +1,6 @@
 import { useCart } from "../../hooks/useCart";
+import { useAuth } from "../../hooks/useAuth";
+import { ROLES } from "../../utils/roles";
 import { useState } from "react";
 import { useFetch } from "../../hooks/useFetch";
 import { getCategorias, getProductos } from "../../services/productosService";
@@ -8,6 +10,7 @@ import MensajeError from "../../components/MensajeError";
 
 export default function Catalogo() {
   const { agregarProducto } = useCart();
+  const { tieneRol } = useAuth();
   const [categoria, setCategoria] = useState("");
   const [busqueda, setBusqueda] = useState("");
 
@@ -47,7 +50,7 @@ export default function Catalogo() {
             <div className="col-12 col-sm-6 col-lg-3" key={p.id}>
               <ProductCard
                 producto={p}
-                onAgregar={agregarProducto}
+                onAgregar={tieneRol(ROLES.CLIENTE) ? agregarProducto : null}
               />
             </div>
           ))}

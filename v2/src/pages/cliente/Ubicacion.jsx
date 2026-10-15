@@ -1,10 +1,12 @@
 
 import { useState } from "react";
 import Mapa from "../../components/Mapa";
-import puntosRetiro from "../../mocks/data/puntosRetiro.json";
+import { useFetch } from "../../hooks/useFetch";
+import { getPuntosRetiro } from "../../services/pedidosService";
 
 export default function Ubicacion() {
   const [puntoSeleccionado, setPuntoSeleccionado] = useState("");
+  const { data: puntosRetiro } = useFetch(getPuntosRetiro, []);
 
   return (
     <main className="container my-4">
@@ -28,7 +30,7 @@ export default function Ubicacion() {
         >
           <option value="">Seleccione una ubicación</option>
 
-          {puntosRetiro.map((punto) => (
+          {puntosRetiro?.map((punto) => (
             <option key={punto.id} value={punto.id}>
               {punto.nombre}
             </option>
@@ -36,12 +38,12 @@ export default function Ubicacion() {
         </select>
       </div>
 
-      <Mapa puntoSeleccionado={puntoSeleccionado} />
+      <Mapa puntos={puntosRetiro} puntoSeleccionado={puntoSeleccionado} />
 
       <h3 className="mt-4">Nuestros puntos de retiro</h3>
 
       <div className="row g-3 mt-2">
-        {puntosRetiro.map((punto) => (
+        {puntosRetiro?.map((punto) => (
           <div className="col-12 col-md-6" key={punto.id}>
             <div className="card h-100">
               <div className="card-body">
@@ -49,7 +51,7 @@ export default function Ubicacion() {
                 <p className="card-text">{punto.direccion}</p>
 
                 <button
-                  className="btn btn-warning"
+                  className="btn btn-primario"
                   onClick={() =>
                     setPuntoSeleccionado(String(punto.id))
                   }

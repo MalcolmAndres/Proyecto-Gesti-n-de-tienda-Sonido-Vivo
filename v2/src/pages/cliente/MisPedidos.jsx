@@ -1,8 +1,11 @@
 
 import { useEffect, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
-import { getMisPedidos } from "../../services/pedidosService";
-import puntosRetiro from "../../mocks/data/puntosRetiro.json";
+import { getMisPedidos, getPuntosRetiro } from "../../services/pedidosService";
+import { useFetch } from "../../hooks/useFetch";
+import { formatPrecio } from "../../utils/formato";
+import { METODOS_PAGO, TIPO_ENTREGA } from "../../utils/estados";
+import EstadoBadge from "../../components/EstadoBadge";
 
 export default function MisPedidos() {
 
@@ -11,6 +14,7 @@ export default function MisPedidos() {
   const [pedidos, setPedidos] = useState([]);
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState("");
+  const { data: puntosRetiro } = useFetch(getPuntosRetiro, []);
 
   // Consulta los pedidos del cliente.
   useEffect(() => {
@@ -83,43 +87,25 @@ export default function MisPedidos() {
             </p>
 
             <p>
-              Estado: {
-                pedido.estado === "EN_PREPARACION"
-                  ? "En preparación"
-                  : pedido.estado === "DESPACHADO"
-                    ? "Despachado"
-                    : pedido.estado === "ENTREGADO"
-                      ? "Entregado"
-                      : pedido.estado
-              }
+              Estado: <EstadoBadge estado={pedido.estado} />
             </p>
 
             <p>
-              Método de pago: {
-                pedido.metodoPago === "TARJETA"
-                  ? "Tarjeta de débito o crédito"
-                  : pedido.metodoPago === "TRANSFERENCIA"
-                    ? "Transferencia bancaria"
-                    : pedido.metodoPago === "EFECTIVO"
-                      ? "Efectivo al retirar"
-                      : "No registrado"
-              }
+              Método de pago: {METODOS_PAGO[pedido.metodoPago] ?? "No registrado"}
             </p>
 
             <p>
-              Tipo de entrega: {pedido.tipoEntrega === "retiro"
-                ? "Retiro en tienda"
-                : "Despacho a domicilio"}
+              Tipo de entrega: {TIPO_ENTREGA[pedido.tipoEntrega]}
             </p>
 
-            {pedido.tipoEntrega === "domicilio" && (
+            {pedido.tipoEntrega === "DESPACHO" && (
               <p>Dirección: {pedido.direccion}</p>
             )}
 
-            {pedido.tipoEntrega === "retiro" && (
+            {pedido.tipoEntrega === "RETIRO_TIENDA" && (
               <p>
                 Punto de retiro: {
-                  puntosRetiro.find(
+                  puntosRetiro?.find(
                     (punto) => String(punto.id) === String(pedido.puntoRetiro)
                   )?.nombre || "No disponible"
                 }
@@ -148,7 +134,7 @@ export default function MisPedidos() {
 
             <h5>
 
-              Total: ${pedido.total.toLocaleString("es-CL")}
+              Total: {formatPrecio(pedido.total)}
 
             </h5>
 

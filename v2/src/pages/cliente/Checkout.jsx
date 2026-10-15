@@ -1,20 +1,23 @@
 import { useCart } from "../../hooks/useCart";
 import { useState } from "react";
-import puntosRetiro from "../../mocks/data/puntosRetiro.json";
 import Mapa from "../../components/Mapa";
 import { useAuth } from "../../hooks/useAuth";
-import { crearPedido } from "../../services/pedidosService";
+import { crearPedido, getPuntosRetiro } from "../../services/pedidosService";
+import { useFetch } from "../../hooks/useFetch";
+import { formatPrecio } from "../../utils/formato";
+import { METODOS_PAGO } from "../../utils/estados";
 
 export default function Checkout() {
 
   const { carrito, totalCarrito, vaciarCarrito } = useCart();// se obtiene los productos y total de carrito
   const { usuario } = useAuth();// se obtiene el usuario que inició sesión
-  const [tipoEntrega, setTipoEntrega] = useState("retiro");
+  const [tipoEntrega, setTipoEntrega] = useState("RETIRO_TIENDA");
   const [direccion, setDireccion] = useState("");
   const [puntoRetiro, setPuntoRetiro] = useState("");
   const [mensaje, setMensaje] = useState(""); // mensaje validación pedido
   const [procesando, setProcesando] = useState(false);
   const [metodoPago, setMetodoPago] = useState("");
+  const { data: puntosRetiro } = useFetch(getPuntosRetiro, []);
 
   // valida los datos de entrega y registra el pedido
   const validarPedido = async () => {
@@ -31,12 +34,12 @@ export default function Checkout() {
       return;
     }
 
-    if (tipoEntrega === "retiro" && !puntoRetiro) {
+    if (tipoEntrega === "RETIRO_TIENDA" && !puntoRetiro) {
       setMensaje("Debe seleccionar un punto de retiro.");
       return;
     }
 
-    if (tipoEntrega === "domicilio" && !direccion.trim()) {
+    if (tipoEntrega === "DESPACHO" && !direccion.trim()) {
       setMensaje("Debe ingresar una dirección de despacho.");
       return;
     }
@@ -45,6 +48,7 @@ export default function Checkout() {
       setMensaje("Debe seleccionar un método de pago.");
       return;
     }
+
     const datosPedido = {
       productos: carrito.map((producto) => ({
         id: producto.id,
@@ -52,10 +56,9 @@ export default function Checkout() {
       })),
       metodoPago,
       tipoEntrega,
-      direccion: tipoEntrega === "domicilio" ? direccion.trim() : null,
-      puntoRetiro: tipoEntrega === "retiro" ? Number(puntoRetiro) : null,
+      direccion: tipoEntrega === "DESPACHO" ? direccion.trim() : null,
+      puntoRetiro: tipoEntrega === "RETIRO_TIENDA" ? Number(puntoRetiro) : null,
     };
-
 
     try {
       setProcesando(true);
@@ -99,7 +102,7 @@ export default function Checkout() {
 
                 <p>Cantidad: {producto.cantidad}</p>
 
-                <p>Subtotal: ${(producto.precio * producto.cantidad).toLocaleString("es-CL")}</p>
+                <p>Subtotal: {formatPrecio(producto.precio * producto.cantidad)}</p>
 
               </div>
 
@@ -108,7 +111,7 @@ export default function Checkout() {
 
           <h4>
 
-            Total: ${totalCarrito.toLocaleString("es-CL")}
+            Total: {formatPrecio(totalCarrito)}
 
           </h4>
 
@@ -124,9 +127,9 @@ export default function Checkout() {
                 type="radio"
                 name="tipoEntrega"
                 id="retiro"
-                value="retiro"
-                checked={tipoEntrega === "retiro"}
-                onChange={() => setTipoEntrega("retiro")}
+                value="RETIRO_TIENDA"
+                checked={tipoEntrega === "RETIRO_TIENDA"}
+                onChange={() => setTipoEntrega("RETIRO_TIENDA")}
               />
 
               <label className="form-check-label" htmlFor="retiro">
@@ -144,9 +147,9 @@ export default function Checkout() {
                 type="radio"
                 name="tipoEntrega"
                 id="domicilio"
-                value="domicilio"
-                checked={tipoEntrega === "domicilio"}
-                onChange={() => setTipoEntrega("domicilio")}
+                value="DESPACHO"
+                checked={tipoEntrega === "DESPACHO"}
+                onChange={() => setTipoEntrega("DESPACHO")}
               />
 
               <label className="form-check-label" htmlFor="domicilio">
@@ -158,7 +161,7 @@ export default function Checkout() {
             </div>
 
             {/*muestra la dirección cuando se selecciona un despacho*/}
-            {tipoEntrega === "domicilio" && (
+            {tipoEntrega === "DESPACHO" && (
 
               <div className="mt-3">
 
@@ -181,7 +184,7 @@ export default function Checkout() {
             )}
 
             {/*muestra los puntos disponibles para retiro*/}
-            {tipoEntrega === "retiro" && (
+            {tipoEntrega === "RETIRO_TIENDA" && (
 
               <div className="mt-3">
 
@@ -200,7 +203,7 @@ export default function Checkout() {
                 >
                   <option value="">Seleccione un punto de retiro</option>
 
-                  {puntosRetiro.map((punto) => (
+                  {puntosRetiro?.map((punto) => (
                     <option key={punto.id} value={punto.id}>
                       {punto.nombre}
                     </option>
@@ -208,7 +211,7 @@ export default function Checkout() {
 
                 </select>
 
-                <Mapa puntoSeleccionado={puntoRetiro} />
+                <Mapa puntos={puntosRetiro} puntoSeleccionado={puntoRetiro} />
 
               </div>
 
@@ -233,9 +236,9 @@ export default function Checkout() {
                 onChange={(e) => setMetodoPago(e.target.value)}
               >
                 <option value="">Seleccione un método de pago</option>
-                <option value="TRANSFERENCIA">Transferencia bancaria</option>
-                <option value="TARJETA">Tarjeta de débito o crédito</option>
-                <option value="EFECTIVO">Efectivo al retirar</option>
+                {Object.entries(METODOS_PAGO).map(([valor, texto]) => (
+                  <option key={valor} value={valor}>{texto}</option>
+                ))}
               </select>
             </div>
 
@@ -256,7 +259,7 @@ export default function Checkout() {
           <button
 
             type="button"
-            className="btn btn-warning mt-3"
+            className="btn btn-primario mt-3"
             onClick={validarPedido}
             disabled={procesando}
           >

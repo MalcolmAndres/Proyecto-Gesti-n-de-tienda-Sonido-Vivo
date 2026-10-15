@@ -9,3 +9,10 @@ export const TIPO_ENTREGA = {
   DESPACHO: "Despacho a domicilio",
   RETIRO_TIENDA: "Retiro en tienda",
 };
+
+// Persona 3: métodos de pago (deben coincidir con el enum MetodoPago en Java)
+export const METODOS_PAGO = {
+  TRANSFERENCIA: "Transferencia bancaria",
+  TARJETA: "Tarjeta de débito o crédito",
+  EFECTIVO: "Efectivo al retirar",
+};
