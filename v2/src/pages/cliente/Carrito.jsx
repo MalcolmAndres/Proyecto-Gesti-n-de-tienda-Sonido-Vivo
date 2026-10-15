@@ -14,7 +14,7 @@ export default function Carrito() {
   } = useCart();
 
   return (
-    <main className="container my-4">
+    <>
 
       <h2>Mi carrito de compras</h2>
 
@@ -106,6 +106,6 @@ export default function Carrito() {
 
       )}
 
-    </main>
+    </>
   );
 }

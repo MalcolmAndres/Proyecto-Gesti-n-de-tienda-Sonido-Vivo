@@ -4,10 +4,15 @@ import { getProducto } from "../../services/productosService";
 import { formatPrecio } from "../../utils/formato";
 import Cargando from "../../components/Cargando";
 import MensajeError from "../../components/MensajeError";
+import { useCart } from "../../hooks/useCart";
+import { useAuth } from "../../hooks/useAuth";
+import { ROLES } from "../../utils/roles";
 
 export default function DetalleProducto() {
   const { id } = useParams();
   const { data: producto, cargando, error } = useFetch(() => getProducto(Number(id)), [id]);
+  const { agregarProducto } = useCart();
+  const { tieneRol } = useAuth();
 
   if (cargando) return <Cargando />;
   if (error) return <MensajeError mensaje={error} />;
@@ -27,6 +32,17 @@ export default function DetalleProducto() {
         <p className={producto.stock > 0 ? "text-success" : "text-danger"}>
           {producto.stock > 0 ? `${producto.stock} unidades disponibles` : "Sin stock"}
         </p>
+
+        {/* solo los clientes pueden comprar */}
+        {tieneRol(ROLES.CLIENTE) && (
+          <button
+            className="btn btn-primario"
+            disabled={producto.stock === 0}
+            onClick={() => agregarProducto(producto)}
+          >
+            Agregar al carrito
+          </button>
+        )}
       </div>
     </div>
   </>

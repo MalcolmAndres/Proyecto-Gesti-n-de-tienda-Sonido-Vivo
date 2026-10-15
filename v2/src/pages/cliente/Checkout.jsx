@@ -79,11 +79,17 @@ export default function Checkout() {
 
 
   return (
-    <main className="container my-4">
+    <>
 
       <h2>Confirmar pedido</h2>
 
-      {/*mensaje validación*/}
+      {/* mensaje de validación o de pedido registrado: queda fuera del bloque del carrito
+          para que se vea aunque el carrito quede vacío después de comprar */}
+      {mensaje && (
+        <div className="alert alert-info mt-3" role="alert">
+          {mensaje}
+        </div>
+      )}
 
       <h3 className="mt-4">Resumen de compra</h3>
 
@@ -250,11 +256,6 @@ export default function Checkout() {
 
           {/*validar pedido*/}
 
-          {mensaje && (
-            <div className="alert alert-info mt-3" role="alert">
-              {mensaje}
-            </div>
-          )}
 
           <button
 
@@ -270,7 +271,7 @@ export default function Checkout() {
         </div>
       )}
 
-    </main>
+    </>
 
   );
 

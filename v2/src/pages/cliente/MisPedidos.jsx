@@ -56,7 +56,7 @@ export default function MisPedidos() {
   }, [usuario?.id]);
 
   return (
-    <main className="container my-4">
+    <>
 
       <h2>Mis pedidos</h2>
 
@@ -143,6 +143,6 @@ export default function MisPedidos() {
         </div>
       ))}
 
-    </main>
+    </>
   );
 }

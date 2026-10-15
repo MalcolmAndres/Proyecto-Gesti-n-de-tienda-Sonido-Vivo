@@ -23,6 +23,10 @@ export function CartProvider({ children }) { // children representa los componen
     const [carrito, setCarrito] = useState(leerCarrito);
     const { usuario } = useAuth();
 
+    // mensaje emergente al agregar al carrito: { tipo: "ok" | "error", texto } o null
+    const [aviso, setAviso] = useState(null);
+    const cerrarAviso = () => setAviso(null);
+
     // guarda el carrito cada vez que cambia
     useEffect(() => {
         localStorage.setItem("carrito", JSON.stringify(carrito));
@@ -35,6 +39,17 @@ export function CartProvider({ children }) { // children representa los componen
 
 
 const agregarProducto = (producto) => {
+
+    // revisa el stock ANTES de agregar, para avisar al cliente
+    const enCarrito = carrito.find((item) => item.id === producto.id);
+    const cantidadActual = enCarrito ? enCarrito.cantidad : 0;
+
+    if (cantidadActual >= producto.stock) {
+        setAviso({ tipo: "error", texto: `No hay más stock disponible de ${producto.nombre}.` });
+        return;
+    }
+
+    setAviso({ tipo: "ok", texto: `${producto.nombre} se agregó al carrito.` });
 
     setCarrito((carritoActual) => {
 
@@ -156,7 +171,9 @@ return (
                 aumentarCantidad,
                 disminuirCantidad,
                 vaciarCarrito,
-                totalCarrito
+                totalCarrito,
+                aviso,
+                cerrarAviso
             }}
         >
             {children}

@@ -57,21 +57,9 @@ export default function GestionPedidos() {
     }
   };
 
-  const nombreEstado = (estado) => {
-    switch (estado) {
-      case "EN_PREPARACION":
-        return "En preparación";
-      case "DESPACHADO":
-        return "Despachado";
-      case "ENTREGADO":
-        return "Entregado";
-      default:
-        return estado;
-    }
-  };
 
   return (
-    <main className="container my-4">
+    <>
 
       <h2>Gestión de pedidos</h2>
 
@@ -206,6 +194,6 @@ export default function GestionPedidos() {
 
       ))}
 
-    </main>
+    </>
   );
 }

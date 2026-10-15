@@ -9,7 +9,7 @@ export default function Ubicacion() {
   const { data: puntosRetiro } = useFetch(getPuntosRetiro, []);
 
   return (
-    <main className="container my-4">
+    <>
       <h2>Ubicaciones y puntos de retiro</h2>
 
       <p>
@@ -63,6 +63,6 @@ export default function Ubicacion() {
           </div>
         ))}
       </div>
-    </main>
+    </>
   );
 }
