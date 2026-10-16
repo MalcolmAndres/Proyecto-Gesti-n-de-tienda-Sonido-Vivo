@@ -1,0 +1,25 @@
+/* Estilos generales y complementarios para Bootstrap */
+body {
+    font-family: Arial, sans-serif;
+}
+
+.hero-section {
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=1200&q=80') center/cover !important;
+}
+
+.category-card {
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    border: 2px solid transparent !important;
+}
+
+.category-card:hover {
+    transform: translateY(-4px);
+    border-color: #ffc107 !important;
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15) !important;
+}
+
+/* Ajustes para tablas o paneles administrativos si los usas */
+.admin-sidebar {
+    min-height: calc(100vh - 56px);
+    background-color: #212529;
+}
